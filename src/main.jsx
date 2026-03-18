@@ -10,6 +10,7 @@ import Homepage from "@/routes/Homepage.jsx";
 import PostListPage from "@/routes/PostListPage.jsx";
 import Write from "@/routes/Write.jsx";   
 import LoginPage from "@/routes/LoginPage.jsx";
+import SinglePostPage from "@/routes/SinglePostPage"
 import RegisterPage from "@/routes/RegisterPage.jsx"; // ✅ fixed spelling
 
 const router = createBrowserRouter([
@@ -23,7 +24,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/slug",
-    element: <PostListPage />,
+    element: <SinglePostPage />,
   },
   {
     path: "/write",
