@@ -62,8 +62,8 @@ function Navbar() {
                   </button>
                 </a>
             </div>
-        </div>
-    );
- };
+        </nav>
+  );
+};
 
 export default Navbar;
