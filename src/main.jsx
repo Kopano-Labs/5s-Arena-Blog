@@ -6,11 +6,11 @@ import {
   RouterProvider,
 } from "react-router-dom";
 
-import Homepage from "./routes/HomePage.jsx";
-import PostListPage from "./routes/PostListPage.jsx";
-import Write from "./routes/Write.jsx";   // ✅ fixed path
-import LoginPage from "./routes/LoginPage.jsx";
-import RegisterPage from "./routes/RegisterPage.jsx"; // ✅ fixed spelling
+import Homepage from "@/routes/Homepage.jsx";
+import PostListPage from "@/routes/PostListPage.jsx";
+import Write from "@/routes/Write.jsx";   // ✅ fixed path
+import LoginPage from "@/routes/LoginPage.jsx";
+import RegisterPage from "@/routes/RegisterPage.jsx"; // ✅ fixed spelling
 
 const router = createBrowserRouter([
   {
