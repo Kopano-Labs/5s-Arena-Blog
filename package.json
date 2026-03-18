@@ -10,9 +10,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "imagekitio-react": "^4.3.0",
-    "react": "19.0.0-rc-66855b96-20241106",
-    "react-dom": "19.0.0-rc-66855b96-20241106"
+    "@imagekit/javascript": "^5.2.2",
+    "@imagekit/react": "^5.0.2",
+    "glob": "^13.0.6",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4"
   },
   "devDependencies": {
     "@eslint/js": "^9.13.0",
