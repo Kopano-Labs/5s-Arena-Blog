@@ -2,29 +2,30 @@
  * Navbar Component
  * Author: https://www.linkedin.com/in/kholofelo-robyn-rababalela-7a26273b6
  */
-import { IKImage, IKUpload } from "@imagekit/react";
+import { IKImage, IKContext } from "@imagekit/react";
 import { useState } from "react";
 
 const Navbar = () => {
     const [open, setOpen] = useState(false);
     
+    // Safety Fallback: Prevents a fatal React crash if your .env file is missing
+    const imageKitEndpoint = import.meta.env.VITE_IK_URL_ENDPOINT || "https://ik.imagekit.io/default_fallback";
+    
     return (
         <div className="w-full h-16 md:h-20 flex items-center justify-between">
             {/* LOGO */}
             <div className="flex items-center gap-4 text-2xl font-bold">
-                <IKImage 
-                    urlEndpoint={import.meta.env.VITE_IK_URL_ENDPOINT}
-                    path="/logo.png" 
-                    className="w-8 h-8" 
-                    alt="5s Arena Blog Logo" 
-                />
+                {/* Corrected IKContext Syntax */}
+                <IKContext urlEndpoint={imageKitEndpoint}>
+                    <IKImage path="/logo.png" className="w-8 h-8" alt="5s Arena Blog Logo" />
+                </IKContext>
                 <span>5s Arena Blog</span>
             </div>
             
             {/* MOBILE MENU */}
             <div className="md:hidden">
                 <div
-                    className="cursor-pointer text-4xl"
+                    className="cursor-pointer text-4xl select-none"
                     onClick={() => setOpen((prev) => !prev)}
                 >
                     {open ? "X" : "☰"}
@@ -40,7 +41,7 @@ const Navbar = () => {
                     <a href="/">Most Popular</a>
                     <a href="/">About</a>
                     <a href="/">
-                        <button className="py-2 px-4 rounded-3xl bg-green-800 text-white">
+                        <button className="py-2 px-4 rounded-3xl bg-green-800 text-white shadow-md">
                             Login ✋🏿
                         </button>
                     </a>
@@ -54,7 +55,7 @@ const Navbar = () => {
                 <a href="/">Most Popular</a>
                 <a href="/">About</a>
                 <a href="/">
-                    <button className="py-2 px-4 rounded-3xl bg-green-800 text-white">
+                    <button className="py-2 px-4 rounded-3xl bg-green-800 text-white shadow-md hover:bg-green-900 transition-colors">
                         Login ✋🏿
                     </button>
                 </a>
