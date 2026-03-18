@@ -35,7 +35,7 @@ function Navbar() {
 
     {/* MOBILE LINK LIST */}
         <div
-         className={`fixed top-16 w-full h-screen flex flex-col items-center justify-center gap-8 font-medium text-lg bg-green-700 transition-transform duration-300 ease-in-out z-50 ${
+         className={`w-full h-screen flex flex-col items-center justify-center absoulte top-16 gap-8 font-medium text-lg bg-green-700 transition-transform duration-300 ease-in-out z-50 ${
          open ? "translate-x-0" : "translate-x-full"
          }`}
         >
