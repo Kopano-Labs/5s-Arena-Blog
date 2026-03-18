@@ -10,20 +10,43 @@ const Navbar = () => {
                 <span>5s Arena Blog</span>
             </div>
             {/* MOBILE MENU */}
-            <div className="md: hidden">
-                {/* MOBILE BUTTON*/}
-                <div 
+            <div className="md:hidden">
+                <div
                     className="cursor-pointer text-4xl"
                     onClick={() => setOpen((prev) => !prev)}
                 >
-                    {open ? "X" : "☰"}
+                {open ? "X" : "☰"}
             </div>
-            {/* MOBILE LINK LIST*/}
-            <div className=""></div> 
-            </div>    
-            {/* DESKTOP MENU */}
-            <div className="hidden md:flex">D</div>
+            {/*MOBILE LINK LIST */}
+            <div 
+                className={`w-full h-screen flex flex-col item-center justify-center absolute top-16 bg-green-700 transition-all ease-in-out ${
+                open ? "-right-0" : "-right-[100%]"
+                }`}
+            >
+                <a href="/">Home</a>
+                <a href="/">Trending</a>
+                <a href="/">Most Popular</a>
+                <a href="/">About</a>
+                <a href="">
+                    <button className="py-2 px-4 rounded-3xl bg-green-800 text-white">
+                        Login ✋🏿
+                    </button>
+                </a>
+            </div>
         </div>
+        {/* DESKTOP MENU */}
+        <div className="hidden md:flex place-items-center gap-8 xl:gap-12 font font-medium">
+            <a href="/">Home</a>
+            <a href="/">Trending</a>
+            <a href="/">Most Popular</a>
+            <a href="/">About</a>
+            <a href="">
+                <button className="py-2 px-4 rounded-3xl bg-green-800 text-white">
+                    Login ✋🏿
+                </button>
+            </a>
+        </div>
+     </div>
   );
 };
 
