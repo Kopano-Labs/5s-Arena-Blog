@@ -1,3 +1,3 @@
 export default function Homepage() {
-  return <div>✅ Homepage is rendering!</div>;
+  return <div style={{ padding: "2rem" }}>✅ Homepage is rendering!</div>;
 }
