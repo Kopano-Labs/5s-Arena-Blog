@@ -1,4 +1,4 @@
-import { IKImage } from "imagekitio-react";
+import { IKImage } from "@imagekit/react";
 
 const Image = ({src,className, w, h, alt}) => {
   return (
