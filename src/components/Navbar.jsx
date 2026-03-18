@@ -19,7 +19,7 @@ const Navbar = () => {
             </div>
             {/*MOBILE LINK LIST */}
             <div 
-                className={`w-full h-screen flex flex-col item-center justify-center absolute top-16 bg-green-700 transition-all ease-in-out ${
+                className={`w-full h-screen flex flex-col items-center justify-center gap-8 font-medium text-lg absolute top-16 bg-green-700 transition-all ease-in-out ${
                 open ? "-right-0" : "-right-[100%]"
                 }`}
             >
@@ -35,7 +35,7 @@ const Navbar = () => {
             </div>
         </div>
         {/* DESKTOP MENU */}
-        <div className="hidden md:flex place-items-center gap-8 xl:gap-12 font font-medium">
+        <div className="hidden md:flex items-center gap-8 xl:gap-12 font font-medium">
             <a href="/">Home</a>
             <a href="/">Trending</a>
             <a href="/">Most Popular</a>
