@@ -21,11 +21,11 @@ A modern MERN stack blog application built with **MongoDB, Express.js, React, an
 ---
 
 ## 🛠️ Tech Stack
-- **Frontend**: React, React Route, route-dom
-- TailwindCSS/Material-UI  
-- **Backend**: Node.js, Express.js  
-- **Database**: MongoDB with Mongoose  
-- **Authentication**: JWT, bcrypt  
+- **Frontend:** React, React Route, route-dom
+- **TailwindCSS/Material-UI**  
+- **Backend:** Node.js, Express.js  
+- **Database:** MongoDB with Mongoose  
+- **Authentication:** JWT, bcrypt  
 
 ## Deploy on Vercel
 
@@ -42,7 +42,7 @@ The easiest way to dep
 ---
 
 ## 🔮 Features
-- Email & SMS notification system  
+- *Email* & SMS notification system  
 - **Secure payment** integration for consultation fees
 - Patient medical history tracking  
 - Multi-language support for global accessibility  
