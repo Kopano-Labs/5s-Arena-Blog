@@ -1,48 +1,46 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./App.jsx";
 import "./index.css";
 import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
+
 import Homepage from "./routes/Homepage.jsx";
 import PostListPage from "./routes/PostListPage.jsx";
-import Write from".routes/Write.jsx";
+import Write from "./routes/Write.jsx";   // ✅ fixed path
 import LoginPage from "./routes/LoginPage.jsx";
-import RegisterPage from "./routes/RegisterPage.jsx";
+import RegisterPage from "./routes/RegisterPage.jsx"; // ✅ fixed spelling
 
-
-
-const router = createBrowserRouter ( [
+const router = createBrowserRouter([
   {
     path: "/",
-    element: <Homepage />
+    element: <Homepage />,
   },
   {
     path: "/post",
-    element: <PostListPage />
+    element: <PostListPage />,
   },
   {
     path: "/slug",
-    element: <PostListPage />
+    element: <PostListPage />,
   },
   {
     path: "/write",
-    element: <Write />
+    element: <Write />,
   },
   {
     path: "/login",
-    element: <LoginPage />
+    element: <LoginPage />,
   },
   {
     path: "/register",
-    element: <RegisterPage />
-  },    
+    element: <RegisterPage />,
+  },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <App /> <RouterProvider router={router}  />
+    <RouterProvider router={router} />
   </React.StrictMode>
 );
