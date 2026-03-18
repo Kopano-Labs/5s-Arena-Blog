@@ -1,4 +1,7 @@
-import { IKImage, IKUpload } from "imagekitio-react";
+import { useState } from "react";
+import { IKImage } from "imagekitio-react";
+
+function Navbar() {
   const [open, setOpen] = useState(false);
 
   const imageKitEndpoint =
@@ -11,12 +14,12 @@ import { IKImage, IKUpload } from "imagekitio-react";
     <nav className="w-full h-16 md:h-20 flex items-center justify-between px-4">
       {/* LOGO */}
       <div className="flex items-center gap-4 text-2xl font-bold">
-        <IKImage 
-            urlEndpoint={"https://ik.imagekit.io/mholkp6zok/"}
-            path="/logo.png"
-            className="w-8 h-8"
-            alt="5s Arena Blog Logo"
-          />
+        <IKImage
+          urlEndpoint="https://ik.imagekit.io/mholkp6zok/"
+          path="/logo.png"
+          className="w-8 h-8"
+          alt="5s Arena Blog Logo"
+        />
         <span>5s Arena Blog</span>
       </div>
 
@@ -62,6 +65,6 @@ import { IKImage, IKUpload } from "imagekitio-react";
       </div>
     </nav>
   );
-};
+}
 
 export default Navbar;
