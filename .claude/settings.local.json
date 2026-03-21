@@ -6,7 +6,8 @@
       "Bash(npm uninstall:*)",
       "Bash(npm install:*)",
       "Bash(ls C:/Users/rkhol/5s-Arena-Blog/server/*.js C:/Users/rkhol/5s-Arena-Blog/server/.env)",
-      "Bash(npx vite:*)"
+      "Bash(npx vite:*)",
+      "WebFetch(domain:github.com)"
     ]
   }
 }
