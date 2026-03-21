@@ -5,7 +5,7 @@ export default function NotFoundPage() {
     <div className="flex flex-col items-center justify-center min-h-[60vh] px-4 text-center">
       <h1 className="text-6xl font-bold text-green-900 mb-4">404</h1>
       <p className="text-xl text-gray-600 mb-8">
-        Oops! This page doesn't exist. The ball went out of bounds.
+        Oops! This page doesn&apos;t exist. The ball went out of bounds.
       </p>
       <Link
         to="/"

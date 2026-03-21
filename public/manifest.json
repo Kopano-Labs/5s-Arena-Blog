@@ -1,0 +1,12 @@
+{
+  "name": "5s Arena Blog",
+  "short_name": "5s Arena",
+  "description": "Football culture, stories, and legends",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#e6e6e6",
+  "theme_color": "#14532d",
+  "icons": [
+    { "src": "/favicon.ico", "sizes": "64x64", "type": "image/x-icon" }
+  ]
+}

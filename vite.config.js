@@ -5,8 +5,11 @@ export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
-      "@": "/src",   // ✅ properly closed string and object
+      "@": "/src",
     },
-    extensions: [".js", ".jsx", ".ts", ".tsx", ".json"], // ✅ separate from alias
+    extensions: [".js", ".jsx", ".ts", ".tsx", ".json"],
+  },
+  build: {
+    chunkSizeWarningLimit: 700,
   },
 });

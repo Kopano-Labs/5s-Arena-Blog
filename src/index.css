@@ -2,9 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
-body{
-    background-color: #e6e6e6ff;
-    width: 100vw;
-    overflow-x: hidden;
-    font-family: 'Montserrat', sans-serif;
+body {
+  background-color: #e6e6e6;
+  width: 100vw;
+  overflow-x: hidden;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.dark body, body.dark-body {
+  background-color: #1a1a2e;
 }
