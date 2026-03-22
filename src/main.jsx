@@ -4,6 +4,8 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { DarkModeProvider } from "@/context/DarkModeContext";
 import { AuthProvider, GOOGLE_CLIENT_ID } from "@/context/AuthContext";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+import { ToastProvider } from "@/components/Toast";
+import ErrorBoundary from "@/components/ErrorBoundary";
 import "./index.css";
 
 /* ── Eager imports (critical path) ── */
@@ -25,6 +27,14 @@ const FixturesPage      = lazy(() => import("@/routes/FixturesPage.jsx"));
 const AuthorDashboard   = lazy(() => import("@/routes/AuthorDashboard.jsx"));
 const MostPopularPage   = lazy(() => import("@/routes/MostPopularPage.jsx"));
 const LeagueFixturesPage= lazy(() => import("@/routes/LeagueFixturesPage.jsx"));
+const AuthorsPage       = lazy(() => import("@/routes/AuthorsPage.jsx"));
+const AuthorProfilePage = lazy(() => import("@/routes/AuthorProfilePage.jsx"));
+const ToolsPage         = lazy(() => import("@/routes/ToolsPage.jsx"));
+const AnalyticsPage     = lazy(() => import("@/routes/AnalyticsPage.jsx"));
+const RoadmapPage       = lazy(() => import("@/routes/RoadmapPage.jsx"));
+const ShopPage          = lazy(() => import("@/routes/ShopPage.jsx"));
+const JobsPage          = lazy(() => import("@/routes/JobsPage.jsx"));
+const AffiliateDisclosurePage = lazy(() => import("@/routes/AffiliateDisclosurePage.jsx"));
 
 /* ── Simple skeleton fallback ── */
 const PageLoader = () => (
@@ -53,18 +63,37 @@ const router = createBrowserRouter([
       { path: "/author",               element: <Suspense fallback={<PageLoader />}><AuthorDashboard /></Suspense> },
       { path: "/most-popular",         element: <Suspense fallback={<PageLoader />}><MostPopularPage /></Suspense> },
       { path: "/most-popular/league",  element: <Suspense fallback={<PageLoader />}><LeagueFixturesPage /></Suspense> },
+      { path: "/authors",              element: <Suspense fallback={<PageLoader />}><AuthorsPage /></Suspense> },
+      { path: "/authors/:name",        element: <Suspense fallback={<PageLoader />}><AuthorProfilePage /></Suspense> },
+      { path: "/tools",                element: <Suspense fallback={<PageLoader />}><ToolsPage /></Suspense> },
+      { path: "/analytics",            element: <Suspense fallback={<PageLoader />}><AnalyticsPage /></Suspense> },
+      { path: "/roadmap",              element: <Suspense fallback={<PageLoader />}><RoadmapPage /></Suspense> },
+      { path: "/shop",                 element: <Suspense fallback={<PageLoader />}><ShopPage /></Suspense> },
+      { path: "/jobs",                 element: <Suspense fallback={<PageLoader />}><JobsPage /></Suspense> },
+      { path: "/affiliate-disclosure", element: <Suspense fallback={<PageLoader />}><AffiliateDisclosurePage /></Suspense> },
       { path: "/:slug",                element: <Suspense fallback={<PageLoader />}><SinglePostPage /></Suspense> },
       { path: "*",                     element: <NotFoundPage /> },
     ],
   },
 ]);
 
+/* ── Register service worker for PWA ── */
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js').catch(() => {});
+  });
+}
+
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
       <DarkModeProvider>
         <AuthProvider>
-          <RouterProvider router={router} />
+          <ToastProvider>
+            <ErrorBoundary>
+              <RouterProvider router={router} />
+            </ErrorBoundary>
+          </ToastProvider>
         </AuthProvider>
       </DarkModeProvider>
     </GoogleOAuthProvider>

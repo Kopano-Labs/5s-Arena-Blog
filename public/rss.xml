@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>5s Arena Blog</title>
+    <link>https://5sarena.blog</link>
+    <description>Your ultimate destination for football culture, stories, legends, tactics, and the beautiful game.</description>
+    <language>en</language>
+    <lastBuildDate>Sat, 22 Mar 2026 00:00:00 GMT</lastBuildDate>
+    <atom:link href="https://5sarena.blog/rss.xml" rel="self" type="application/rss+xml"/>
+    <image>
+      <url>https://5sarena.blog/logo.png</url>
+      <title>5s Arena Blog</title>
+      <link>https://5sarena.blog</link>
+    </image>
+    <item>
+      <title>The Rise and Fall of Football Dynasties</title>
+      <link>https://5sarena.blog/the-rise-and-fall-of-football-dynasties</link>
+      <description>Exploring how the greatest football clubs built empires and what led to their eventual decline.</description>
+      <category>Culture</category>
+      <pubDate>Sat, 15 Mar 2026 00:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>Legends of the Beautiful Game: Pele to Messi</title>
+      <link>https://5sarena.blog/legends-of-the-beautiful-game-pele-to-messi</link>
+      <description>A journey through football's greatest players and how they shaped the modern game.</description>
+      <category>Legends</category>
+      <pubDate>Fri, 14 Mar 2026 00:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>5-a-Side Tactics That Win Games</title>
+      <link>https://5sarena.blog/5-a-side-tactics-that-win-games</link>
+      <description>Master the small-sided game with these proven tactical formations and strategies.</description>
+      <category>Tactics</category>
+      <pubDate>Thu, 13 Mar 2026 00:00:00 GMT</pubDate>
+    </item>
+  </channel>
+</rss>

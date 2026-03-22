@@ -30,6 +30,7 @@ const NAV_LINKS = [
   { to: "/fixtures",         label: "Fixtures",     icon: "⚽" },
   { to: "/league",           label: "League",       icon: "🏆" },
   { to: "/most-popular",     label: "Popular",      icon: "🔥" },
+  { to: "/authors",          label: "Authors",      icon: "✍️" },
   { to: "/about",            label: "About",        icon: "ℹ️" },
 ];
 
@@ -38,6 +39,21 @@ const SOCIAL_LINKS = [
   { href: "https://www.instagram.com/fivesarena", Icon: InstagramIcon, label: "Instagram", hoverColor: "#e1306c" },
   { href: "https://www.tiktok.com/@fivesarena", Icon: TikTokIcon, label: "TikTok", hoverColor: "#69c9d0" },
 ];
+
+/* ── Status dot reads from localStorage ──────────────────────── */
+function StatusDot() {
+  const stored = typeof window !== "undefined" ? localStorage.getItem("5s_user_status") : null;
+  const status = stored ? JSON.parse(stored) : { type: "online", color: "#22c55e" };
+  if (status.visible === false) return null;
+  return (
+    <motion.div
+      className="absolute -top-0.5 -right-0.5 w-3 h-3 rounded-full border-2"
+      style={{ background: status.color, borderColor: "#059669", boxShadow: `0 0 6px ${status.color}` }}
+      animate={{ scale: [1, 1.3, 1] }}
+      transition={{ duration: 2, repeat: Infinity }}
+    />
+  );
+}
 
 export default function Navbar() {
   const [open, setOpen]         = useState(false);
@@ -117,9 +133,15 @@ export default function Navbar() {
               onChange={(e) => setSearchQuery(e.target.value)}
               onKeyDown={handleSearch}
               placeholder="Search posts..."
-              className="pl-9 pr-4 py-1.5 rounded-full text-sm w-40 lg:w-52 outline-none focus:ring-2 focus:ring-green-500/50 transition-all"
+              className="pl-9 pr-16 py-1.5 rounded-full text-sm w-40 lg:w-52 outline-none focus:ring-2 focus:ring-green-500/50 transition-all"
               style={{ background: "rgba(255,255,255,0.08)", color: "#f9fafb", border: "1px solid rgba(255,255,255,0.12)" }}
             />
+            <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-0.5 pointer-events-none">
+              <kbd className="px-1 py-0.5 rounded text-[0.55rem]"
+                style={{ fontFamily: "'Montserrat',sans-serif", background: "rgba(255,255,255,0.1)", color: "#6b7280", border: "1px solid rgba(255,255,255,0.12)" }}>
+                ⌘K
+              </kbd>
+            </div>
           </div>
 
           {/* Nav links */}
@@ -177,7 +199,7 @@ export default function Navbar() {
           {user ? (
             <Link to="/profile">
               <motion.div
-                className="flex items-center gap-2 py-1.5 px-3 rounded-full cursor-pointer"
+                className="flex items-center gap-2 py-1.5 px-3 rounded-full cursor-pointer relative"
                 style={{
                   background: "linear-gradient(135deg, #059669, #10b981)",
                   boxShadow: "0 0 16px rgba(16,185,129,0.35)",
@@ -193,6 +215,8 @@ export default function Navbar() {
                 <span className="text-sm font-semibold" style={{ fontFamily: "'Montserrat', sans-serif" }}>
                   {user.name?.split(" ")[0]}
                 </span>
+                {/* Status dot */}
+                <StatusDot />
               </motion.div>
             </Link>
           ) : (

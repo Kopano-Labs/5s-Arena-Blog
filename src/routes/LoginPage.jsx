@@ -146,7 +146,7 @@ export default function LoginPage() {
           </p>
           <div className="flex items-center justify-center gap-8 mt-10">
             <div className="text-center">
-              <p className="text-3xl font-bold text-green-500">34+</p>
+              <p className="text-3xl font-bold text-green-500">46+</p>
               <p className="text-gray-500 text-sm">Articles</p>
             </div>
             <div className="w-px h-12 bg-gray-700" />

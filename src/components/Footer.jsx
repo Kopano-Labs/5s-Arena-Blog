@@ -39,6 +39,10 @@ const QUICK_LINKS = [
   { to: "/league",       label: "League" },
   { to: "/most-popular", label: "Most Popular" },
   { to: "/posts",        label: "All Articles" },
+  { to: "/authors",      label: "Authors" },
+  { to: "/tools",        label: "Tools" },
+  { to: "/shop",         label: "Shop" },
+  { to: "/jobs",         label: "Jobs" },
   { to: "/about",        label: "About" },
 ];
 
@@ -196,10 +200,18 @@ export default function Footer() {
           style={{ borderTop: "1px solid rgba(255,255,255,0.06)", color: "#4b5563", fontFamily: "'Inter', sans-serif" }}
         >
           <span>&copy; {new Date().getFullYear()} 5s Arena Blog. All rights reserved.</span>
-          <div className="flex gap-4">
+          <div className="flex flex-wrap justify-center gap-x-4 gap-y-1">
             <Link to="/about" className="hover:text-green-500 transition-colors">About</Link>
             <span>·</span>
+            <Link to="/roadmap" className="hover:text-green-500 transition-colors">Roadmap</Link>
+            <span>·</span>
+            <Link to="/analytics" className="hover:text-green-500 transition-colors">Analytics</Link>
+            <span>·</span>
+            <Link to="/affiliate-disclosure" className="hover:text-green-500 transition-colors">Affiliates</Link>
+            <span>·</span>
             <a href="https://wa.me/27637820245" className="hover:text-green-500 transition-colors">Contact</a>
+            <span>·</span>
+            <a href="/rss.xml" target="_blank" rel="noopener noreferrer" className="hover:text-green-500 transition-colors">RSS</a>
           </div>
         </div>
       </div>
