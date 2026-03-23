@@ -5,6 +5,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import AIChatbot from "@/components/AIChatbot";
 import FloatingNavDropdown from "@/components/FloatingNavDropdown";
+import BottomNavBar from "@/components/BottomNavBar";
 import SearchModal from "@/components/SearchModal";
 import BackToTop from "@/components/BackToTop";
 import ReadingProgressBar from "@/components/ReadingProgressBar";
@@ -48,6 +49,7 @@ export default function MainLayout() {
       <SearchModal />
       <BackToTop />
       <BuyMeACoffee />
+      <BottomNavBar />
     </div>
   );
 }

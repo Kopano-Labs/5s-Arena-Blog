@@ -35,6 +35,12 @@ const RoadmapPage       = lazy(() => import("@/routes/RoadmapPage.jsx"));
 const ShopPage          = lazy(() => import("@/routes/ShopPage.jsx"));
 const JobsPage          = lazy(() => import("@/routes/JobsPage.jsx"));
 const AffiliateDisclosurePage = lazy(() => import("@/routes/AffiliateDisclosurePage.jsx"));
+const DonationsPage           = lazy(() => import("@/routes/DonationsPage.jsx"));
+const CreatorPage             = lazy(() => import("@/routes/CreatorPage.jsx"));
+const TacticsPage             = lazy(() => import("@/routes/TacticsPage.jsx"));
+const FitnessPage             = lazy(() => import("@/routes/FitnessPage.jsx"));
+const CommunityPage           = lazy(() => import("@/routes/CommunityPage.jsx"));
+const TermsPage               = lazy(() => import("@/routes/TermsPage.jsx"));
 
 /* ── Simple skeleton fallback ── */
 const PageLoader = () => (
@@ -71,6 +77,12 @@ const router = createBrowserRouter([
       { path: "/shop",                 element: <Suspense fallback={<PageLoader />}><ShopPage /></Suspense> },
       { path: "/jobs",                 element: <Suspense fallback={<PageLoader />}><JobsPage /></Suspense> },
       { path: "/affiliate-disclosure", element: <Suspense fallback={<PageLoader />}><AffiliateDisclosurePage /></Suspense> },
+      { path: "/donate",               element: <Suspense fallback={<PageLoader />}><DonationsPage /></Suspense> },
+      { path: "/creator",              element: <Suspense fallback={<PageLoader />}><CreatorPage /></Suspense> },
+      { path: "/tactics",              element: <Suspense fallback={<PageLoader />}><TacticsPage /></Suspense> },
+      { path: "/fitness",              element: <Suspense fallback={<PageLoader />}><FitnessPage /></Suspense> },
+      { path: "/community",            element: <Suspense fallback={<PageLoader />}><CommunityPage /></Suspense> },
+      { path: "/terms",                element: <Suspense fallback={<PageLoader />}><TermsPage /></Suspense> },
       { path: "/:slug",                element: <Suspense fallback={<PageLoader />}><SinglePostPage /></Suspense> },
       { path: "*",                     element: <NotFoundPage /> },
     ],

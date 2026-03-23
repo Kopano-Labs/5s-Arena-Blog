@@ -1,23 +1,36 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
+import { useAuth } from "@/context/AuthContext";
 
-const NAV_ITEMS = [
-  { icon: "🏠", label: "Home",      to: "/",                         hue: 145, color: "#22c55e" },
-  { icon: "⚽", label: "Fixtures",  to: "/fixtures",                 hue: 185, color: "#06b6d4" },
-  { icon: "🏆", label: "League",    to: "/league",                   hue: 45,  color: "#f59e0b" },
-  { icon: "📰", label: "Articles",  to: "/posts",                    hue: 150, color: "#10b981" },
-  { icon: "✍️", label: "Authors",   to: "/authors",                  hue: 300, color: "#ec4899" },
-  { icon: "🧮", label: "Tools",     to: "/tools",                    hue: 30,  color: "#f97316" },
-  { icon: "✍️", label: "Write",     to: "/write",                    hue: 270, color: "#a855f7" },
-  { icon: "👤", label: "Profile",   to: "/profile",                  hue: 210, color: "#3b82f6" },
-  { icon: "📱", label: "WhatsApp",  to: "https://wa.me/27637820245", hue: 130, color: "#25d366", external: true },
+const BASE_NAV_ITEMS = [
+  { icon: "🏠", label: "Home",     to: "/",          hue: 145, color: "#22c55e" },
+  { icon: "⚽", label: "Fixtures", to: "/fixtures",  hue: 185, color: "#06b6d4" },
+  { icon: "🏆", label: "League",   to: "/league",    hue: 45,  color: "#f59e0b" },
+  { icon: "📰", label: "Articles", to: "/posts",     hue: 150, color: "#10b981" },
+  { icon: "✍️", label: "Authors",  to: "/authors",   hue: 300, color: "#ec4899" },
+  { icon: "🧮", label: "Tools",    to: "/tools",     hue: 30,  color: "#f97316" },
+  { icon: "👤", label: "Profile",  to: "/profile",   hue: 210, color: "#3b82f6" },
+  { icon: "💸", label: "Donate",   to: "/donate",    hue: 45,  color: "#f59e0b" },
+  { icon: "🎨", label: "Creator",  to: "/creator",   hue: 280, color: "#a855f7" },
 ];
+const AUTHOR_ITEM = { icon: "📝", label: "Write",   to: "/write",    hue: 270, color: "#a855f7" };
+const ADMIN_ITEM  = { icon: "⚙️", label: "Admin",   to: "/admin",    hue: 0,   color: "#ef4444" };
 
 export default function FloatingNavDropdown() {
   const [open, setOpen] = useState(false);
   const [visible, setVisible] = useState(false);
   const location = useLocation();
+  const { user } = useAuth();
+
+  const isAdmin  = user?.role === "admin";
+  const isAuthor = user?.role === "author" || isAdmin;
+
+  const NAV_ITEMS = [
+    ...BASE_NAV_ITEMS,
+    ...(isAuthor ? [AUTHOR_ITEM] : []),
+    ...(isAdmin  ? [ADMIN_ITEM]  : []),
+  ];
 
   /* Show after 300px scroll */
   useEffect(() => {

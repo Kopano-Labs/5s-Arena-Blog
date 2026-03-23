@@ -27,7 +27,7 @@ const WhatsAppIcon = () => (
 );
 
 const SOCIAL_LINKS = [
-  { href: "https://www.facebook.com/people/Fives-Arena/61588019843126/", Icon: FacebookIcon,  label: "Facebook",  hoverColor: "#1877f2" },
+  { href: "https://www.facebook.com/profile.php?id=61588019843126", Icon: FacebookIcon,  label: "Facebook",  hoverColor: "#1877f2" },
   { href: "https://www.instagram.com/fivesarena",                         Icon: InstagramIcon, label: "Instagram", hoverColor: "#e1306c" },
   { href: "https://www.tiktok.com/@fivesarena",                           Icon: TikTokIcon,    label: "TikTok",   hoverColor: "#69c9d0" },
   { href: "https://wa.me/27637820245",                                    Icon: WhatsAppIcon,  label: "WhatsApp", hoverColor: "#25d366" },
@@ -44,6 +44,8 @@ const QUICK_LINKS = [
   { to: "/shop",         label: "Shop" },
   { to: "/jobs",         label: "Jobs" },
   { to: "/about",        label: "About" },
+  { to: "/donate",       label: "💸 Fuel the Pitch" },
+  { to: "/creator",      label: "🎨 The Creator" },
 ];
 
 const CATEGORIES = ["Culture", "Legends", "Skills", "Tactics", "Fitness", "Community"];

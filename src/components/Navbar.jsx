@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { FiSun, FiMoon, FiSearch, FiUser, FiX, FiMenu } from "react-icons/fi";
-import { useDarkMode } from "@/context/DarkModeContext";
+import { useDarkMode, THEMES } from "@/context/DarkModeContext";
 import { useAuth } from "@/context/AuthContext";
 
 /* ── Social icon SVGs ─────────────────────────────────────── */
@@ -35,7 +35,7 @@ const NAV_LINKS = [
 ];
 
 const SOCIAL_LINKS = [
-  { href: "https://www.facebook.com/people/Fives-Arena/61588019843126/", Icon: FacebookIcon, label: "Facebook", hoverColor: "#1877f2" },
+  { href: "https://www.facebook.com/profile.php?id=61588019843126", Icon: FacebookIcon, label: "Facebook", hoverColor: "#1877f2" },
   { href: "https://www.instagram.com/fivesarena", Icon: InstagramIcon, label: "Instagram", hoverColor: "#e1306c" },
   { href: "https://www.tiktok.com/@fivesarena", Icon: TikTokIcon, label: "TikTok", hoverColor: "#69c9d0" },
 ];
@@ -56,10 +56,11 @@ function StatusDot() {
 }
 
 export default function Navbar() {
-  const [open, setOpen]         = useState(false);
-  const [scrolled, setScrolled] = useState(false);
+  const [open, setOpen]             = useState(false);
+  const [scrolled, setScrolled]     = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  const { darkMode, toggleDarkMode }  = useDarkMode();
+  const [themeOpen, setThemeOpen]   = useState(false);
+  const { darkMode, theme, setTheme, toggleDarkMode } = useDarkMode();
   const { user }    = useAuth();
   const navigate    = useNavigate();
   const location    = useLocation();
@@ -185,15 +186,48 @@ export default function Navbar() {
             ))}
           </div>
 
-          {/* Dark mode toggle */}
-          <motion.button
-            onClick={toggleDarkMode}
-            className="text-gray-400 hover:text-green-400 transition-colors p-1"
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-          >
-            {darkMode ? <FiSun size={18} /> : <FiMoon size={18} />}
-          </motion.button>
+          {/* Theme switcher */}
+          <div className="relative">
+            <motion.button
+              onClick={() => setThemeOpen((p) => !p)}
+              className="text-gray-400 hover:text-green-400 transition-colors p-1"
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+              title={`Theme: ${theme}`}
+            >
+              {theme === "dark" ? <FiMoon size={18} /> : theme === "light" ? <FiSun size={18} /> : theme === "reading" ? <span style={{fontSize:16}}>📖</span> : <span style={{fontSize:16}}>🎆</span>}
+            </motion.button>
+            <AnimatePresence>
+              {themeOpen && (
+                <motion.div
+                  initial={{ opacity: 0, y: -8, scale: 0.95 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: -8, scale: 0.95 }}
+                  transition={{ type: "spring", stiffness: 300, damping: 25 }}
+                  className="absolute right-0 top-10 rounded-2xl overflow-hidden z-50"
+                  style={{ background: "rgba(13,17,23,0.97)", backdropFilter: "blur(20px)", border: "1px solid rgba(255,255,255,0.1)", boxShadow: "0 16px 48px rgba(0,0,0,0.6)", minWidth: 160 }}
+                >
+                  {THEMES.map((t) => (
+                    <button
+                      key={t.id}
+                      onClick={() => { setTheme(t.id); setThemeOpen(false); }}
+                      className="w-full flex items-center gap-3 px-4 py-2.5 text-left transition-colors"
+                      style={{
+                        fontFamily: "'Montserrat',sans-serif",
+                        fontSize: "0.8rem",
+                        background: theme === t.id ? `${t.accent}18` : "transparent",
+                        color: theme === t.id ? t.accent : "#9ca3af",
+                        borderBottom: "1px solid rgba(255,255,255,0.04)",
+                      }}
+                    >
+                      <span style={{ width: 12, height: 12, borderRadius: "50%", background: t.accent, display: "inline-block", flexShrink: 0 }} />
+                      {t.label}
+                    </button>
+                  ))}
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
 
           {/* Auth button */}
           {user ? (
