@@ -2,6 +2,7 @@ import { Router } from "express";
 import jwt from "jsonwebtoken";
 import User from "../models/User.js";
 import { OAuth2Client } from "google-auth-library";
+import authMiddleware from "../middleware/authMiddleware.js"; // Import the new middleware
 
 const router = Router();
 
@@ -34,7 +35,8 @@ router.post("/register", async (req, res) => {
       },
     });
   } catch (err) {
-    res.status(400).json({ error: err.message });
+    console.error("Registration error:", err); // More detailed logging
+    res.status(500).json({ error: "Server error during registration." }); // Generic message to client
   }
 });
 
@@ -70,29 +72,27 @@ router.post("/login", async (req, res) => {
       },
     });
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    console.error("Login error:", err); // More detailed logging
+    res.status(500).json({ error: "Server error during login." }); // Generic message to client
   }
 });
 
-// GET /me - get current user from JWT
-router.get("/me", async (req, res) => {
+// GET /me - get current user from JWT (protected route)
+router.get("/me", authMiddleware, async (req, res) => {
   try {
-    const authHeader = req.headers.authorization;
-    if (!authHeader || !authHeader.startsWith("Bearer ")) {
-      return res.status(401).json({ error: "No token provided" });
-    }
-
-    const token = authHeader.split(" ")[1];
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
-    const user = await User.findById(decoded.id).select("-password");
+    // req.user is now available from authMiddleware
+    const user = await User.findById(req.user.id).select("-password -__v"); // Exclude password and __v field
     if (!user) {
       return res.status(404).json({ error: "User not found" });
     }
 
+    // Return a simplified user object, without the full Mongoose model
     res.json(user);
   } catch (err) {
-    res.status(401).json({ error: "Invalid token" });
+    console.error("Profile fetch error:", err); // More detailed logging
+    res
+      .status(401)
+      .json({ error: "Authentication failed. Please log in again." }); // Generic message to client
   }
 });
 

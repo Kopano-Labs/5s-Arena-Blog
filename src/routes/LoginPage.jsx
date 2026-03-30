@@ -96,9 +96,9 @@ export default function LoginPage() {
   const handleLogin = (e) => {
     e.preventDefault();
     setError("");
-    const result = login(email, password);
-    if (result.success) {
-      navigate("/");
+    login(email, password).then(result => {
+      if (result.success) navigate("/");
+      else setError(result.error);
     } else {
       setError(result.error);
     }
@@ -111,9 +111,9 @@ export default function LoginPage() {
       setError("Password must be at least 6 characters.");
       return;
     }
-    const result = register(name, email, password);
-    if (result.success) {
-      navigate("/");
+    register(name, email, password).then(result => {
+      if (result.success) navigate("/");
+      else setError(result.error);
     } else {
       setError(result.error);
     }
@@ -318,9 +318,9 @@ export default function LoginPage() {
             {GOOGLE_CLIENT_ID ? (
               <div className="flex justify-center">
                 <GoogleLogin
-                  onSuccess={(credentialResponse) => {
-                    const result = googleLogin(credentialResponse);
-                    if (result.success) {
+                  onSuccess={async (credentialResponse) => {
+                    const result = await googleLogin(credentialResponse);
+                    if (result.success) { // Await the result here
                       navigate("/");
                     } else {
                       setError(result.error);
