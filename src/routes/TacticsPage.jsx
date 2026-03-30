@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence, useInView } from "framer-motion";
-import BottomNavBar from "@/components/BottomNavBar";
 
 /* ─── Constants ──────────────────────────────────────────────── */
 const SPRING = { type: "spring", stiffness: 280, damping: 22 };
@@ -127,16 +126,76 @@ const BETTING_TACTICS = [
 ];
 
 const SITE_SECTIONS = [
-  { to: "/",           emoji: "🏠", label: "Home",        color: "#22c55e", tip: "Latest posts, featured content, and quick-access hub." },
-  { to: "/posts",      emoji: "📰", label: "Posts",       color: "#06b6d4", tip: "Browse all 46+ articles: tactics, fixtures, and football culture." },
-  { to: "/fixtures",   emoji: "📅", label: "Fixtures",    color: "#f59e0b", tip: "Upcoming 5s Arena match schedule and results." },
-  { to: "/league",     emoji: "🏆", label: "League",      color: "#a855f7", tip: "Full league table, standings, and stats." },
-  { to: "/authors",    emoji: "✍️", label: "Authors",     color: "#ef4444", tip: "Meet the writers behind the blog with full author profiles." },
-  { to: "/tools",      emoji: "🧮", label: "Tools",       color: "#f97316", tip: "Football calculators, squad builders, and stat tools." },
-  { to: "/shop",       emoji: "🛍️", label: "Shop",        color: "#ec4899", tip: "Official 5s Arena merch and gear." },
-  { to: "/donate",     emoji: "💸", label: "Donate",      color: "#f59e0b", tip: "Support the blog and keep the content flowing." },
-  { to: "/creator",    emoji: "🎨", label: "Creator",     color: "#a855f7", tip: "Meet Robyn — the designer and developer behind it all." },
-  { to: "/about",      emoji: "ℹ️", label: "About",       color: "#06b6d4", tip: "The story of 5s Arena and what we stand for." },
+  {
+    to: "/",
+    emoji: "🏠",
+    label: "Home",
+    color: "#22c55e",
+    tip: "Latest posts, featured content, and quick-access hub.",
+  },
+  {
+    to: "/posts",
+    emoji: "📰",
+    label: "Posts",
+    color: "#06b6d4",
+    tip: "Browse all 46+ articles: tactics, fixtures, and football culture.",
+  },
+  {
+    to: "/fixtures",
+    emoji: "📅",
+    label: "Fixtures",
+    color: "#f59e0b",
+    tip: "Upcoming 5s Arena match schedule and results.",
+  },
+  {
+    to: "/league",
+    emoji: "🏆",
+    label: "League",
+    color: "#a855f7",
+    tip: "Full league table, standings, and stats.",
+  },
+  {
+    to: "/authors",
+    emoji: "✍️",
+    label: "Authors",
+    color: "#ef4444",
+    tip: "Meet the writers behind the blog with full author profiles.",
+  },
+  {
+    to: "/tools",
+    emoji: "🧮",
+    label: "Tools",
+    color: "#f97316",
+    tip: "Football calculators, squad builders, and stat tools.",
+  },
+  {
+    to: "/shop",
+    emoji: "🛍️",
+    label: "Shop",
+    color: "#ec4899",
+    tip: "Official 5s Arena merch and gear.",
+  },
+  {
+    to: "/donate",
+    emoji: "💸",
+    label: "Donate",
+    color: "#f59e0b",
+    tip: "Support the blog and keep the content flowing.",
+  },
+  {
+    to: "/creator",
+    emoji: "🎨",
+    label: "Creator",
+    color: "#a855f7",
+    tip: "Meet Robyn — the designer and developer behind it all.",
+  },
+  {
+    to: "/about",
+    emoji: "ℹ️",
+    label: "About",
+    color: "#06b6d4",
+    tip: "The story of 5s Arena and what we stand for.",
+  },
 ];
 
 /* ─── SVG Pitch Diagrams ─────────────────────────────────────── */
@@ -144,105 +203,349 @@ function PitchDiagram({ type, color }) {
   const diagrams = {
     "high-press": (
       <svg viewBox="0 0 120 80" className="w-full h-20 opacity-70">
-        <rect x="5" y="5" width="110" height="70" rx="4" fill="none" stroke={color} strokeWidth="0.8" strokeOpacity="0.3" />
-        <line x1="60" y1="5" x2="60" y2="75" stroke={color} strokeWidth="0.5" strokeOpacity="0.2" />
-        <circle cx="60" cy="40" r="12" fill="none" stroke={color} strokeWidth="0.5" strokeOpacity="0.2" />
+        <rect
+          x="5"
+          y="5"
+          width="110"
+          height="70"
+          rx="4"
+          fill="none"
+          stroke={color}
+          strokeWidth="0.8"
+          strokeOpacity="0.3"
+        />
+        <line
+          x1="60"
+          y1="5"
+          x2="60"
+          y2="75"
+          stroke={color}
+          strokeWidth="0.5"
+          strokeOpacity="0.2"
+        />
+        <circle
+          cx="60"
+          cy="40"
+          r="12"
+          fill="none"
+          stroke={color}
+          strokeWidth="0.5"
+          strokeOpacity="0.2"
+        />
         {/* Pressing players */}
         {[30, 50, 70, 90].map((x, i) => (
-          <motion.circle key={i} cx={x} cy={15 + (i % 2) * 8} r="4" fill={color} fillOpacity="0.8"
-            animate={{ cy: [15 + (i%2)*8, 20 + (i%2)*8, 15 + (i%2)*8] }}
-            transition={{ duration: 1.5, delay: i*0.2, repeat: Infinity }} />
+          <motion.circle
+            key={i}
+            cx={x}
+            cy={15 + (i % 2) * 8}
+            r="4"
+            fill={color}
+            fillOpacity="0.8"
+            animate={{
+              cy: [15 + (i % 2) * 8, 20 + (i % 2) * 8, 15 + (i % 2) * 8],
+            }}
+            transition={{ duration: 1.5, delay: i * 0.2, repeat: Infinity }}
+          />
         ))}
         {/* Ball */}
-        <motion.circle cx="60" cy="25" r="3" fill="white" fillOpacity="0.9"
+        <motion.circle
+          cx="60"
+          cy="25"
+          r="3"
+          fill="white"
+          fillOpacity="0.9"
           animate={{ cx: [60, 45, 60, 75, 60], cy: [25, 20, 25, 20, 25] }}
-          transition={{ duration: 3, repeat: Infinity }} />
+          transition={{ duration: 3, repeat: Infinity }}
+        />
         {/* Arrows showing press */}
         {[30, 50, 70, 90].map((x, i) => (
-          <motion.line key={`a${i}`} x1={x} y1={22} x2={60} y2={22} stroke={color} strokeWidth="0.8" strokeOpacity="0.5"
-            animate={{ opacity: [0.5, 1, 0.5] }} transition={{ duration: 1, delay: i*0.15, repeat: Infinity }} />
+          <motion.line
+            key={`a${i}`}
+            x1={x}
+            y1={22}
+            x2={60}
+            y2={22}
+            stroke={color}
+            strokeWidth="0.8"
+            strokeOpacity="0.5"
+            animate={{ opacity: [0.5, 1, 0.5] }}
+            transition={{ duration: 1, delay: i * 0.15, repeat: Infinity }}
+          />
         ))}
       </svg>
     ),
     counter: (
       <svg viewBox="0 0 120 80" className="w-full h-20 opacity-70">
-        <rect x="5" y="5" width="110" height="70" rx="4" fill="none" stroke={color} strokeWidth="0.8" strokeOpacity="0.3" />
-        <line x1="60" y1="5" x2="60" y2="75" stroke={color} strokeWidth="0.5" strokeOpacity="0.2" />
+        <rect
+          x="5"
+          y="5"
+          width="110"
+          height="70"
+          rx="4"
+          fill="none"
+          stroke={color}
+          strokeWidth="0.8"
+          strokeOpacity="0.3"
+        />
+        <line
+          x1="60"
+          y1="5"
+          x2="60"
+          y2="75"
+          stroke={color}
+          strokeWidth="0.5"
+          strokeOpacity="0.2"
+        />
         {/* Defensive block */}
         {[25, 45, 65, 85].map((x, i) => (
           <circle key={i} cx={x} cy={65} r="4" fill={color} fillOpacity="0.5" />
         ))}
         {/* Counter runners */}
         {[40, 60, 80].map((x, i) => (
-          <motion.circle key={`r${i}`} cx={x} cy={50} r="4" fill={color} fillOpacity="0.9"
+          <motion.circle
+            key={`r${i}`}
+            cx={x}
+            cy={50}
+            r="4"
+            fill={color}
+            fillOpacity="0.9"
             animate={{ cy: [50, 20, 50], cx: [x, x + 5, x] }}
-            transition={{ duration: 2, delay: i*0.3, repeat: Infinity }} />
+            transition={{ duration: 2, delay: i * 0.3, repeat: Infinity }}
+          />
         ))}
-        <motion.line x1="60" y1="55" x2="60" y2="20" stroke={color} strokeWidth="1.5" strokeOpacity="0.6" strokeDasharray="3,2"
-          animate={{ strokeDashoffset: [0, -20] }} transition={{ duration: 1, repeat: Infinity }} />
+        <motion.line
+          x1="60"
+          y1="55"
+          x2="60"
+          y2="20"
+          stroke={color}
+          strokeWidth="1.5"
+          strokeOpacity="0.6"
+          strokeDasharray="3,2"
+          animate={{ strokeDashoffset: [0, -20] }}
+          transition={{ duration: 1, repeat: Infinity }}
+        />
       </svg>
     ),
     tiki: (
       <svg viewBox="0 0 120 80" className="w-full h-20 opacity-70">
-        <rect x="5" y="5" width="110" height="70" rx="4" fill="none" stroke={color} strokeWidth="0.8" strokeOpacity="0.3" />
-        <line x1="60" y1="5" x2="60" y2="75" stroke={color} strokeWidth="0.5" strokeOpacity="0.2" />
+        <rect
+          x="5"
+          y="5"
+          width="110"
+          height="70"
+          rx="4"
+          fill="none"
+          stroke={color}
+          strokeWidth="0.8"
+          strokeOpacity="0.3"
+        />
+        <line
+          x1="60"
+          y1="5"
+          x2="60"
+          y2="75"
+          stroke={color}
+          strokeWidth="0.5"
+          strokeOpacity="0.2"
+        />
         {/* Triangle passing network */}
-        {[[30,30],[60,20],[50,45],[80,35],[65,55],[40,55]].map(([x,y], i) => (
+        {[
+          [30, 30],
+          [60, 20],
+          [50, 45],
+          [80, 35],
+          [65, 55],
+          [40, 55],
+        ].map(([x, y], i) => (
           <circle key={i} cx={x} cy={y} r="4" fill={color} fillOpacity="0.8" />
         ))}
-        {[[30,30,60,20],[60,20,50,45],[50,45,30,30],[60,20,80,35],[80,35,65,55],[65,55,50,45]].map(([x1,y1,x2,y2], i) => (
-          <motion.line key={`l${i}`} x1={x1} y1={y1} x2={x2} y2={y2} stroke={color} strokeWidth="0.8" strokeOpacity="0.4"
-            animate={{ strokeOpacity: [0.4, 0.9, 0.4] }} transition={{ duration: 1.2, delay: i*0.2, repeat: Infinity }} />
+        {[
+          [30, 30, 60, 20],
+          [60, 20, 50, 45],
+          [50, 45, 30, 30],
+          [60, 20, 80, 35],
+          [80, 35, 65, 55],
+          [65, 55, 50, 45],
+        ].map(([x1, y1, x2, y2], i) => (
+          <motion.line
+            key={`l${i}`}
+            x1={x1}
+            y1={y1}
+            x2={x2}
+            y2={y2}
+            stroke={color}
+            strokeWidth="0.8"
+            strokeOpacity="0.4"
+            animate={{ strokeOpacity: [0.4, 0.9, 0.4] }}
+            transition={{ duration: 1.2, delay: i * 0.2, repeat: Infinity }}
+          />
         ))}
       </svg>
     ),
     gegen: (
       <svg viewBox="0 0 120 80" className="w-full h-20 opacity-70">
-        <rect x="5" y="5" width="110" height="70" rx="4" fill="none" stroke={color} strokeWidth="0.8" strokeOpacity="0.3" />
-        <line x1="60" y1="5" x2="60" y2="75" stroke={color} strokeWidth="0.5" strokeOpacity="0.2" />
+        <rect
+          x="5"
+          y="5"
+          width="110"
+          height="70"
+          rx="4"
+          fill="none"
+          stroke={color}
+          strokeWidth="0.8"
+          strokeOpacity="0.3"
+        />
+        <line
+          x1="60"
+          y1="5"
+          x2="60"
+          y2="75"
+          stroke={color}
+          strokeWidth="0.5"
+          strokeOpacity="0.2"
+        />
         {/* Ball lost position */}
-        <motion.circle cx="55" cy="35" r="3" fill="white" fillOpacity="0.9"
-          animate={{ scale: [1, 1.4, 1] }} transition={{ duration: 0.8, repeat: Infinity }} />
+        <motion.circle
+          cx="55"
+          cy="35"
+          r="3"
+          fill="white"
+          fillOpacity="0.9"
+          animate={{ scale: [1, 1.4, 1] }}
+          transition={{ duration: 0.8, repeat: Infinity }}
+        />
         {/* Immediate press swarm */}
         {[35, 50, 70, 45, 65].map((x, i) => (
-          <motion.circle key={i} cx={x} cy={20 + i * 8} r="4" fill={color} fillOpacity="0.8"
-            animate={{ cx: [x, 55, x], cy: [20 + i*8, 35, 20 + i*8] }}
-            transition={{ duration: 1.2, delay: i*0.1, repeat: Infinity }} />
+          <motion.circle
+            key={i}
+            cx={x}
+            cy={20 + i * 8}
+            r="4"
+            fill={color}
+            fillOpacity="0.8"
+            animate={{ cx: [x, 55, x], cy: [20 + i * 8, 35, 20 + i * 8] }}
+            transition={{ duration: 1.2, delay: i * 0.1, repeat: Infinity }}
+          />
         ))}
       </svg>
     ),
     lowblock: (
       <svg viewBox="0 0 120 80" className="w-full h-20 opacity-70">
-        <rect x="5" y="5" width="110" height="70" rx="4" fill="none" stroke={color} strokeWidth="0.8" strokeOpacity="0.3" />
-        <line x1="60" y1="5" x2="60" y2="75" stroke={color} strokeWidth="0.5" strokeOpacity="0.2" />
+        <rect
+          x="5"
+          y="5"
+          width="110"
+          height="70"
+          rx="4"
+          fill="none"
+          stroke={color}
+          strokeWidth="0.8"
+          strokeOpacity="0.3"
+        />
+        <line
+          x1="60"
+          y1="5"
+          x2="60"
+          y2="75"
+          stroke={color}
+          strokeWidth="0.5"
+          strokeOpacity="0.2"
+        />
         {/* Back four */}
         {[20, 40, 60, 80, 100].map((x, i) => (
           <circle key={i} cx={x} cy={65} r="4" fill={color} fillOpacity="0.9" />
         ))}
         {/* Mid four */}
         {[30, 50, 70, 90].map((x, i) => (
-          <circle key={`m${i}`} cx={x} cy={52} r="4" fill={color} fillOpacity="0.6" />
+          <circle
+            key={`m${i}`}
+            cx={x}
+            cy={52}
+            r="4"
+            fill={color}
+            fillOpacity="0.6"
+          />
         ))}
         {/* Shield indicator */}
-        <motion.rect x="15" y="48" width="90" height="22" rx="3" fill={color} fillOpacity="0.05"
-          stroke={color} strokeWidth="0.8" strokeOpacity="0.3"
-          animate={{ strokeOpacity: [0.3, 0.7, 0.3] }} transition={{ duration: 2, repeat: Infinity }} />
+        <motion.rect
+          x="15"
+          y="48"
+          width="90"
+          height="22"
+          rx="3"
+          fill={color}
+          fillOpacity="0.05"
+          stroke={color}
+          strokeWidth="0.8"
+          strokeOpacity="0.3"
+          animate={{ strokeOpacity: [0.3, 0.7, 0.3] }}
+          transition={{ duration: 2, repeat: Infinity }}
+        />
       </svg>
     ),
     wing: (
       <svg viewBox="0 0 120 80" className="w-full h-20 opacity-70">
-        <rect x="5" y="5" width="110" height="70" rx="4" fill="none" stroke={color} strokeWidth="0.8" strokeOpacity="0.3" />
-        <line x1="60" y1="5" x2="60" y2="75" stroke={color} strokeWidth="0.5" strokeOpacity="0.2" />
+        <rect
+          x="5"
+          y="5"
+          width="110"
+          height="70"
+          rx="4"
+          fill="none"
+          stroke={color}
+          strokeWidth="0.8"
+          strokeOpacity="0.3"
+        />
+        <line
+          x1="60"
+          y1="5"
+          x2="60"
+          y2="75"
+          stroke={color}
+          strokeWidth="0.5"
+          strokeOpacity="0.2"
+        />
         {/* Wide runners */}
-        <motion.circle cx="15" cy="40" r="4" fill={color} fillOpacity="0.9"
-          animate={{ cy: [40, 20, 40] }} transition={{ duration: 2, repeat: Infinity }} />
-        <motion.circle cx="105" cy="40" r="4" fill={color} fillOpacity="0.9"
-          animate={{ cy: [40, 20, 40] }} transition={{ duration: 2, delay: 0.5, repeat: Infinity }} />
+        <motion.circle
+          cx="15"
+          cy="40"
+          r="4"
+          fill={color}
+          fillOpacity="0.9"
+          animate={{ cy: [40, 20, 40] }}
+          transition={{ duration: 2, repeat: Infinity }}
+        />
+        <motion.circle
+          cx="105"
+          cy="40"
+          r="4"
+          fill={color}
+          fillOpacity="0.9"
+          animate={{ cy: [40, 20, 40] }}
+          transition={{ duration: 2, delay: 0.5, repeat: Infinity }}
+        />
         {/* Crossing arrows */}
-        <motion.path d="M 15 25 Q 40 10 60 20" fill="none" stroke={color} strokeWidth="1" strokeOpacity="0.6" strokeDasharray="2,2"
-          animate={{ strokeDashoffset: [0, -20] }} transition={{ duration: 1, repeat: Infinity }} />
-        <motion.path d="M 105 25 Q 80 10 60 20" fill="none" stroke={color} strokeWidth="1" strokeOpacity="0.6" strokeDasharray="2,2"
-          animate={{ strokeDashoffset: [0, -20] }} transition={{ duration: 1, delay: 0.3, repeat: Infinity }} />
+        <motion.path
+          d="M 15 25 Q 40 10 60 20"
+          fill="none"
+          stroke={color}
+          strokeWidth="1"
+          strokeOpacity="0.6"
+          strokeDasharray="2,2"
+          animate={{ strokeDashoffset: [0, -20] }}
+          transition={{ duration: 1, repeat: Infinity }}
+        />
+        <motion.path
+          d="M 105 25 Q 80 10 60 20"
+          fill="none"
+          stroke={color}
+          strokeWidth="1"
+          strokeOpacity="0.6"
+          strokeDasharray="2,2"
+          animate={{ strokeDashoffset: [0, -20] }}
+          transition={{ duration: 1, delay: 0.3, repeat: Infinity }}
+        />
         {/* Centre players */}
         {[45, 60, 75].map((x, i) => (
           <circle key={i} cx={x} cy={45} r="4" fill={color} fillOpacity="0.6" />
@@ -291,7 +594,13 @@ function OrbitingTab({ label, angle, radius, isActive, onClick, color }) {
 }
 
 /* ─── Glass Card ─────────────────────────────────────────────── */
-function GlassCard({ children, className = "", style = {}, delay = 0, inView = true }) {
+function GlassCard({
+  children,
+  className = "",
+  style = {},
+  delay = 0,
+  inView = true,
+}) {
   return (
     <motion.div
       className={`rounded-2xl p-5 ${className}`}
@@ -331,7 +640,15 @@ function SiteIcon({ to, emoji, label, color, tip }) {
         >
           {emoji}
         </motion.div>
-        <span style={{ fontFamily: "'Montserrat',sans-serif", color: "#9ca3af", fontSize: "0.65rem", textAlign: "center", letterSpacing: "0.04em" }}>
+        <span
+          style={{
+            fontFamily: "'Montserrat',sans-serif",
+            color: "#9ca3af",
+            fontSize: "0.65rem",
+            textAlign: "center",
+            letterSpacing: "0.04em",
+          }}
+        >
           {label}
         </span>
         <AnimatePresence>
@@ -373,10 +690,16 @@ export default function TacticsPage() {
   const tutorialRef = useRef(null);
   const calloutRef = useRef(null);
 
-  const footballInView = useInView(footballRef, { once: true, margin: "-60px" });
+  const footballInView = useInView(footballRef, {
+    once: true,
+    margin: "-60px",
+  });
   const fivesInView = useInView(fivesRef, { once: true, margin: "-60px" });
   const bettingInView = useInView(bettingRef, { once: true, margin: "-60px" });
-  const tutorialInView = useInView(tutorialRef, { once: true, margin: "-60px" });
+  const tutorialInView = useInView(tutorialRef, {
+    once: true,
+    margin: "-60px",
+  });
   const calloutInView = useInView(calloutRef, { once: true, margin: "-60px" });
 
   useEffect(() => {
@@ -396,9 +719,9 @@ export default function TacticsPage() {
   }, []);
 
   const TAB_DEFS = [
-    { id: "football", label: "⚽ Football",  color: "#22c55e", baseAngle: 270 },
-    { id: "fives",    label: "🏟️ 5s Arena",  color: "#06b6d4", baseAngle: 30  },
-    { id: "betting",  label: "💰 Betting",   color: "#f59e0b", baseAngle: 150 },
+    { id: "football", label: "⚽ Football", color: "#22c55e", baseAngle: 270 },
+    { id: "fives", label: "🏟️ 5s Arena", color: "#06b6d4", baseAngle: 30 },
+    { id: "betting", label: "💰 Betting", color: "#f59e0b", baseAngle: 150 },
   ];
 
   const ROLE_MESSAGES = {
@@ -425,13 +748,15 @@ export default function TacticsPage() {
   const role = ROLE_MESSAGES[userRole] || ROLE_MESSAGES.visitor;
 
   return (
-    <div style={{ background: "#030712", minHeight: "100vh", color: "#f9fafb" }}>
-
+    <div
+      style={{ background: "#030712", minHeight: "100vh", color: "#f9fafb" }}
+    >
       {/* ══ HERO ══════════════════════════════════════════════════ */}
       <section
         className="relative overflow-hidden flex flex-col items-center justify-center py-28 px-4 text-center"
         style={{
-          background: "linear-gradient(160deg, #030712 0%, #0a1a0a 40%, #030712 100%)",
+          background:
+            "linear-gradient(160deg, #030712 0%, #0a1a0a 40%, #030712 100%)",
           borderBottom: "1px solid rgba(34,197,94,0.15)",
           minHeight: "520px",
         }}
@@ -453,7 +778,11 @@ export default function TacticsPage() {
           <div
             key={i}
             className="absolute h-full pointer-events-none"
-            style={{ width: 1, left: `${pct}%`, background: "rgba(34,197,94,0.03)" }}
+            style={{
+              width: 1,
+              left: `${pct}%`,
+              background: "rgba(34,197,94,0.03)",
+            }}
           />
         ))}
 
@@ -470,14 +799,25 @@ export default function TacticsPage() {
               top: "20%",
             }}
             animate={{ x: [0, 20, -15, 0], y: [0, -15, 10, 0] }}
-            transition={{ duration: 7 + i * 2, repeat: Infinity, ease: "easeInOut" }}
+            transition={{
+              duration: 7 + i * 2,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
           />
         ))}
 
         {/* Title */}
         <div className="relative z-10">
           <motion.p
-            style={{ fontFamily: "'Montserrat',sans-serif", color: "#22c55e", fontSize: "0.8rem", letterSpacing: "0.35em", textTransform: "uppercase", marginBottom: "1rem" }}
+            style={{
+              fontFamily: "'Montserrat',sans-serif",
+              color: "#22c55e",
+              fontSize: "0.8rem",
+              letterSpacing: "0.35em",
+              textTransform: "uppercase",
+              marginBottom: "1rem",
+            }}
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ ...SPRING, delay: 0.1 }}
@@ -496,7 +836,7 @@ export default function TacticsPage() {
                 color: i < 7 ? "#22c55e" : "#f9fafb",
                 textShadow: i < 7 ? "0 0 40px rgba(34,197,94,0.5)" : "none",
               }}
-              initial={{ y: -60, opacity: 0, rotate: (i % 2 === 0 ? -8 : 8) }}
+              initial={{ y: -60, opacity: 0, rotate: i % 2 === 0 ? -8 : 8 }}
               animate={{ y: 0, opacity: 1, rotate: 0 }}
               transition={{ ...SPRING, delay: 0.15 + i * 0.04 }}
             >
@@ -505,9 +845,13 @@ export default function TacticsPage() {
           ))}
 
           {/* Orbiting tabs */}
-          <div className="relative mx-auto mt-12" style={{ width: 280, height: 140 }}>
+          <div
+            className="relative mx-auto mt-12"
+            style={{ width: 280, height: 140 }}
+          >
             {TAB_DEFS.map((tab) => {
-              const finalAngle = tab.baseAngle + (activeTab === tab.id ? 0 : orbitAngle);
+              const finalAngle =
+                tab.baseAngle + (activeTab === tab.id ? 0 : orbitAngle);
               return (
                 <OrbitingTab
                   key={tab.id}
@@ -531,7 +875,8 @@ export default function TacticsPage() {
           <motion.div
             className="mb-10 inline-flex items-center gap-3 px-6 py-3 rounded-2xl"
             style={{
-              background: "linear-gradient(135deg, #22c55e30, #06b6d430, #f59e0b30)",
+              background:
+                "linear-gradient(135deg, #22c55e30, #06b6d430, #f59e0b30)",
               border: "1px solid rgba(34,197,94,0.3)",
               backgroundSize: "300% 300%",
             }}
@@ -542,28 +887,62 @@ export default function TacticsPage() {
             viewport={{ once: true }}
           >
             <span style={{ fontSize: "1.5rem" }}>⚽</span>
-            <h2 style={{ fontFamily: "'Oswald',sans-serif", fontSize: "1.4rem", color: "#22c55e", textTransform: "uppercase", letterSpacing: "0.08em", margin: 0 }}>
+            <h2
+              style={{
+                fontFamily: "'Oswald',sans-serif",
+                fontSize: "1.4rem",
+                color: "#22c55e",
+                textTransform: "uppercase",
+                letterSpacing: "0.08em",
+                margin: 0,
+              }}
+            >
               Football Tactics
             </h2>
           </motion.div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {FOOTBALL_TACTICS.map((t, i) => (
-              <GlassCard key={t.id} delay={i * 0.08} inView={footballInView} style={{ borderColor: `${t.color}20` }}>
+              <GlassCard
+                key={t.id}
+                delay={i * 0.08}
+                inView={footballInView}
+                style={{ borderColor: `${t.color}20` }}
+              >
                 <div className="flex items-center gap-3 mb-3">
                   <motion.span
                     style={{ fontSize: "1.8rem" }}
                     animate={{ rotate: [0, 8, -8, 0] }}
-                    transition={{ duration: 3, delay: i * 0.5, repeat: Infinity }}
+                    transition={{
+                      duration: 3,
+                      delay: i * 0.5,
+                      repeat: Infinity,
+                    }}
                   >
                     {t.icon}
                   </motion.span>
-                  <h3 style={{ fontFamily: "'Oswald',sans-serif", color: t.color, fontSize: "1rem", textTransform: "uppercase", letterSpacing: "0.05em" }}>
+                  <h3
+                    style={{
+                      fontFamily: "'Oswald',sans-serif",
+                      color: t.color,
+                      fontSize: "1rem",
+                      textTransform: "uppercase",
+                      letterSpacing: "0.05em",
+                    }}
+                  >
                     {t.name}
                   </h3>
                 </div>
                 <PitchDiagram type={t.pitch} color={t.color} />
-                <p style={{ fontFamily: "'Inter',sans-serif", color: "#9ca3af", fontSize: "0.82rem", lineHeight: 1.65, marginTop: "0.75rem" }}>
+                <p
+                  style={{
+                    fontFamily: "'Inter',sans-serif",
+                    color: "#9ca3af",
+                    fontSize: "0.82rem",
+                    lineHeight: 1.65,
+                    marginTop: "0.75rem",
+                  }}
+                >
                   {t.desc}
                 </p>
               </GlassCard>
@@ -573,12 +952,17 @@ export default function TacticsPage() {
       </section>
 
       {/* ══ 5S ARENA TACTICS ══════════════════════════════════════ */}
-      <section ref={fivesRef} className="py-16 px-4" style={{ background: "rgba(6,182,212,0.03)" }}>
+      <section
+        ref={fivesRef}
+        className="py-16 px-4"
+        style={{ background: "rgba(6,182,212,0.03)" }}
+      >
         <div className="max-w-6xl mx-auto">
           <motion.div
             className="mb-10 inline-flex items-center gap-3 px-6 py-3 rounded-2xl"
             style={{
-              background: "linear-gradient(135deg, #06b6d430, #22c55e30, #06b6d430)",
+              background:
+                "linear-gradient(135deg, #06b6d430, #22c55e30, #06b6d430)",
               border: "1px solid rgba(6,182,212,0.3)",
             }}
             initial={{ opacity: 0, x: -20 }}
@@ -587,25 +971,63 @@ export default function TacticsPage() {
             transition={SPRING}
           >
             <span style={{ fontSize: "1.5rem" }}>🏟️</span>
-            <h2 style={{ fontFamily: "'Oswald',sans-serif", fontSize: "1.4rem", color: "#06b6d4", textTransform: "uppercase", letterSpacing: "0.08em", margin: 0 }}>
+            <h2
+              style={{
+                fontFamily: "'Oswald',sans-serif",
+                fontSize: "1.4rem",
+                color: "#06b6d4",
+                textTransform: "uppercase",
+                letterSpacing: "0.08em",
+                margin: 0,
+              }}
+            >
               5s Arena Tactics
             </h2>
           </motion.div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-10">
             {FIVES_TACTICS.map((t, i) => (
-              <GlassCard key={t.id} delay={i * 0.08} inView={fivesInView} style={{ borderColor: `${t.color}20` }}>
+              <GlassCard
+                key={t.id}
+                delay={i * 0.08}
+                inView={fivesInView}
+                style={{ borderColor: `${t.color}20` }}
+              >
                 <motion.span
-                  style={{ fontSize: "2rem", display: "block", marginBottom: "0.6rem" }}
+                  style={{
+                    fontSize: "2rem",
+                    display: "block",
+                    marginBottom: "0.6rem",
+                  }}
                   animate={{ scale: [1, 1.12, 1] }}
-                  transition={{ duration: 2.5, delay: i * 0.4, repeat: Infinity }}
+                  transition={{
+                    duration: 2.5,
+                    delay: i * 0.4,
+                    repeat: Infinity,
+                  }}
                 >
                   {t.icon}
                 </motion.span>
-                <h3 style={{ fontFamily: "'Oswald',sans-serif", color: t.color, fontSize: "1rem", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: "0.5rem" }}>
+                <h3
+                  style={{
+                    fontFamily: "'Oswald',sans-serif",
+                    color: t.color,
+                    fontSize: "1rem",
+                    textTransform: "uppercase",
+                    letterSpacing: "0.05em",
+                    marginBottom: "0.5rem",
+                  }}
+                >
                   {t.name}
                 </h3>
-                <p style={{ fontFamily: "'Inter',sans-serif", color: "#9ca3af", fontSize: "0.82rem", lineHeight: 1.65 }}>
+                <p
+                  style={{
+                    fontFamily: "'Inter',sans-serif",
+                    color: "#9ca3af",
+                    fontSize: "0.82rem",
+                    lineHeight: 1.65,
+                  }}
+                >
                   {t.desc}
                 </p>
               </GlassCard>
@@ -620,7 +1042,8 @@ export default function TacticsPage() {
           <motion.div
             className="mb-10 inline-flex items-center gap-3 px-6 py-3 rounded-2xl"
             style={{
-              background: "linear-gradient(135deg, #f59e0b30, #ef444430, #f59e0b30)",
+              background:
+                "linear-gradient(135deg, #f59e0b30, #ef444430, #f59e0b30)",
               border: "1px solid rgba(245,158,11,0.3)",
             }}
             initial={{ opacity: 0, x: -20 }}
@@ -629,7 +1052,16 @@ export default function TacticsPage() {
             transition={SPRING}
           >
             <span style={{ fontSize: "1.5rem" }}>💰</span>
-            <h2 style={{ fontFamily: "'Oswald',sans-serif", fontSize: "1.4rem", color: "#f59e0b", textTransform: "uppercase", letterSpacing: "0.08em", margin: 0 }}>
+            <h2
+              style={{
+                fontFamily: "'Oswald',sans-serif",
+                fontSize: "1.4rem",
+                color: "#f59e0b",
+                textTransform: "uppercase",
+                letterSpacing: "0.08em",
+                margin: 0,
+              }}
+            >
               Betting Tactics
             </h2>
           </motion.div>
@@ -654,30 +1086,81 @@ export default function TacticsPage() {
               ⚠️
             </motion.span>
             <div>
-              <p style={{ fontFamily: "'Oswald',sans-serif", color: "#f59e0b", fontSize: "0.9rem", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "0.25rem" }}>
+              <p
+                style={{
+                  fontFamily: "'Oswald',sans-serif",
+                  color: "#f59e0b",
+                  fontSize: "0.9rem",
+                  textTransform: "uppercase",
+                  letterSpacing: "0.06em",
+                  marginBottom: "0.25rem",
+                }}
+              >
                 Gambling Disclaimer
               </p>
-              <p style={{ fontFamily: "'Inter',sans-serif", color: "#fcd34d", fontSize: "0.82rem", lineHeight: 1.6 }}>
-                Betting tactics are for educational and entertainment purposes only. Always gamble responsibly. Only bet what you can afford to lose. If gambling is causing problems, visit{" "}
-                <a href="https://www.responsiblegambling.org" target="_blank" rel="noopener noreferrer" style={{ color: "#f59e0b" }}>responsiblegambling.org</a>.
+              <p
+                style={{
+                  fontFamily: "'Inter',sans-serif",
+                  color: "#fcd34d",
+                  fontSize: "0.82rem",
+                  lineHeight: 1.6,
+                }}
+              >
+                Betting tactics are for educational and entertainment purposes
+                only. Always gamble responsibly. Only bet what you can afford to
+                lose. If gambling is causing problems, visit{" "}
+                <a
+                  href="https://www.responsiblegambling.org"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ color: "#f59e0b" }}
+                >
+                  responsiblegambling.org
+                </a>
+                .
               </p>
             </div>
           </motion.div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {BETTING_TACTICS.map((t, i) => (
-              <GlassCard key={t.id} delay={i * 0.1} inView={bettingInView} style={{ borderColor: `${t.color}20` }}>
+              <GlassCard
+                key={t.id}
+                delay={i * 0.1}
+                inView={bettingInView}
+                style={{ borderColor: `${t.color}20` }}
+              >
                 <motion.span
-                  style={{ fontSize: "2rem", display: "block", marginBottom: "0.6rem" }}
+                  style={{
+                    fontSize: "2rem",
+                    display: "block",
+                    marginBottom: "0.6rem",
+                  }}
                   animate={{ y: [0, -4, 0] }}
                   transition={{ duration: 2, delay: i * 0.3, repeat: Infinity }}
                 >
                   {t.icon}
                 </motion.span>
-                <h3 style={{ fontFamily: "'Oswald',sans-serif", color: t.color, fontSize: "0.95rem", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: "0.5rem" }}>
+                <h3
+                  style={{
+                    fontFamily: "'Oswald',sans-serif",
+                    color: t.color,
+                    fontSize: "0.95rem",
+                    textTransform: "uppercase",
+                    letterSpacing: "0.05em",
+                    marginBottom: "0.5rem",
+                  }}
+                >
                   {t.name}
                 </h3>
-                <p style={{ fontFamily: "'Inter',sans-serif", color: "#9ca3af", fontSize: "0.8rem", lineHeight: 1.65 }}>
+                <p
+                  style={{
+                    fontFamily: "'Inter',sans-serif",
+                    color: "#9ca3af",
+                    fontSize: "0.8rem",
+                    lineHeight: 1.65,
+                  }}
+                >
                   {t.desc}
                 </p>
               </GlassCard>
@@ -687,7 +1170,11 @@ export default function TacticsPage() {
       </section>
 
       {/* ══ USER ROLE CALLOUT ═════════════════════════════════════ */}
-      <section ref={calloutRef} className="py-12 px-4" style={{ background: "rgba(255,255,255,0.02)" }}>
+      <section
+        ref={calloutRef}
+        className="py-12 px-4"
+        style={{ background: "rgba(255,255,255,0.02)" }}
+      >
         <div className="max-w-3xl mx-auto">
           <motion.div
             className="rounded-2xl p-6 flex items-start gap-5"
@@ -708,10 +1195,26 @@ export default function TacticsPage() {
               {role.icon}
             </motion.span>
             <div>
-              <h3 style={{ fontFamily: "'Oswald',sans-serif", color: role.color, fontSize: "1.1rem", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "0.4rem" }}>
+              <h3
+                style={{
+                  fontFamily: "'Oswald',sans-serif",
+                  color: role.color,
+                  fontSize: "1.1rem",
+                  textTransform: "uppercase",
+                  letterSpacing: "0.08em",
+                  marginBottom: "0.4rem",
+                }}
+              >
                 {role.title}
               </h3>
-              <p style={{ fontFamily: "'Inter',sans-serif", color: "#d1d5db", fontSize: "0.88rem", lineHeight: 1.7 }}>
+              <p
+                style={{
+                  fontFamily: "'Inter',sans-serif",
+                  color: "#d1d5db",
+                  fontSize: "0.88rem",
+                  lineHeight: 1.7,
+                }}
+              >
                 {role.body}
               </p>
             </div>
@@ -724,21 +1227,33 @@ export default function TacticsPage() {
         <div className="max-w-5xl mx-auto">
           <motion.h2
             className="mb-2"
-            style={{ fontFamily: "'Oswald',sans-serif", fontSize: "1.5rem", color: "#f9fafb", textTransform: "uppercase", letterSpacing: "0.1em" }}
+            style={{
+              fontFamily: "'Oswald',sans-serif",
+              fontSize: "1.5rem",
+              color: "#f9fafb",
+              textTransform: "uppercase",
+              letterSpacing: "0.1em",
+            }}
             initial={{ opacity: 0, y: 16 }}
             animate={tutorialInView ? { opacity: 1, y: 0 } : {}}
             transition={SPRING}
           >
-            <span style={{ color: "#22c55e" }}>/// </span>WEBSITE NAVIGATION GUIDE
+            <span style={{ color: "#22c55e" }}>/// </span>WEBSITE NAVIGATION
+            GUIDE
           </motion.h2>
           <motion.p
             className="mb-10"
-            style={{ fontFamily: "'Inter',sans-serif", color: "#6b7280", fontSize: "0.85rem" }}
+            style={{
+              fontFamily: "'Inter',sans-serif",
+              color: "#6b7280",
+              fontSize: "0.85rem",
+            }}
             initial={{ opacity: 0 }}
             animate={tutorialInView ? { opacity: 1 } : {}}
             transition={{ ...SPRING, delay: 0.1 }}
           >
-            Hover over any icon to learn what each section of the 5s Arena Blog does.
+            Hover over any icon to learn what each section of the 5s Arena Blog
+            does.
           </motion.p>
 
           <div className="grid grid-cols-5 sm:grid-cols-10 gap-6 justify-items-center">
@@ -755,8 +1270,6 @@ export default function TacticsPage() {
           </div>
         </div>
       </section>
-
-      <BottomNavBar />
     </div>
   );
 }

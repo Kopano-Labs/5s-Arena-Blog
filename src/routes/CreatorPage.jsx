@@ -2,7 +2,6 @@ import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence, useInView } from "framer-motion";
 import PageGateLoader from "@/components/PageGateLoader";
 import BottomNavBar from "@/components/BottomNavBar";
-
 /* ════════════════════════════════════════════════════════════════
    5-SECOND WELCOME ANIMATION — plays before content reveals
    ════════════════════════════════════════════════════════════════ */
@@ -38,7 +37,7 @@ function Particle({ delay, color }) {
 function LightBeam({ angle, color, delay }) {
   return (
     <motion.div
-      className="absolute pointer-events-none origin-bottom"
+      className="absolute origin-bottom pointer-events-none"
       style={{
         width: 2,
         height: "55vh",
@@ -49,7 +48,10 @@ function LightBeam({ angle, color, delay }) {
         rotate: angle,
         opacity: 0,
       }}
-      animate={{ opacity: [0, 0.8, 0], rotate: [angle - 15, angle, angle + 15, angle] }}
+      animate={{
+        opacity: [0, 0.8, 0],
+        rotate: [angle - 15, angle, angle + 15, angle],
+      }}
       transition={{ duration: 3, delay, ease: "easeInOut" }}
     />
   );
@@ -92,14 +94,19 @@ function WelcomeAnimation({ onComplete }) {
 
       {/* Stadium light beams */}
       {[-60, -30, 0, 30, 60].map((angle, i) => (
-        <LightBeam key={i} angle={angle} color={WELCOME_COLORS[i]} delay={0.3 + i * 0.15} />
+        <LightBeam
+          key={i}
+          angle={angle}
+          color={WELCOME_COLORS[i]}
+          delay={0.3 + i * 0.15}
+        />
       ))}
 
       {/* Pitch circle decorations */}
       {[200, 300, 420].map((size, i) => (
         <motion.div
           key={i}
-          className="absolute rounded-full border pointer-events-none"
+          className="absolute border rounded-full pointer-events-none"
           style={{
             width: size,
             height: size,
@@ -114,7 +121,7 @@ function WelcomeAnimation({ onComplete }) {
       ))}
 
       {/* Center content */}
-      <div className="relative z-10 text-center px-4">
+      <div className="relative z-10 px-4 text-center">
         {/* Football */}
         <motion.div
           style={{ fontSize: "5rem", display: "block", marginBottom: "1.5rem" }}
@@ -185,10 +192,15 @@ function WelcomeAnimation({ onComplete }) {
         </motion.p>
 
         {/* Loading bar */}
-        <div className="mt-10 w-48 mx-auto h-1 rounded-full overflow-hidden" style={{ background: "rgba(255,255,255,0.08)" }}>
+        <div
+          className="w-48 h-1 mx-auto mt-10 overflow-hidden rounded-full"
+          style={{ background: "rgba(255,255,255,0.08)" }}
+        >
           <motion.div
             className="h-full rounded-full"
-            style={{ background: "linear-gradient(90deg, #22c55e, #06b6d4, #a855f7)" }}
+            style={{
+              background: "linear-gradient(90deg, #22c55e, #06b6d4, #a855f7)",
+            }}
             initial={{ width: "0%" }}
             animate={{ width: "100%" }}
             transition={{ duration: 5, ease: "linear" }}
@@ -216,12 +228,12 @@ function WelcomeAnimation({ onComplete }) {
    ══════════════════════════════════════════════════════════════ */
 
 const SKILLS = [
-  { name: "React / Vite",    level: 95, color: "#06b6d4" },
-  { name: "Framer Motion",   level: 90, color: "#a855f7" },
-  { name: "UI/UX Design",    level: 88, color: "#22c55e" },
-  { name: "TailwindCSS",     level: 92, color: "#f59e0b" },
-  { name: "Node / Express",  level: 75, color: "#ef4444" },
-  { name: "Football IQ",     level: 100, color: "#22c55e" },
+  { name: "React / Vite", level: 95, color: "#06b6d4" },
+  { name: "Framer Motion", level: 90, color: "#a855f7" },
+  { name: "UI/UX Design", level: 88, color: "#22c55e" },
+  { name: "TailwindCSS", level: 92, color: "#f59e0b" },
+  { name: "Node / Express", level: 75, color: "#ef4444" },
+  { name: "Football IQ", level: 100, color: "#22c55e" },
 ];
 
 const PROJECTS = [
@@ -249,27 +261,68 @@ const PROJECTS = [
 ];
 
 const SOCIAL_LINKS = [
-  { label: "Ko-fi", icon: "☕", url: "https://ko-fi.com/robynawesome",       color: "#29abe0" },
-  { label: "PayPal", icon: "🅿️", url: "https://www.paypal.me/osheenviews",  color: "#003087" },
-  { label: "WhatsApp", icon: "📱", url: "https://wa.me/27637820245",          color: "#25d366" },
+  {
+    label: "Ko-fi",
+    icon: "☕",
+    url: "https://ko-fi.com/robynawesome",
+    color: "#29abe0",
+  },
+  {
+    label: "PayPal",
+    icon: "🅿️",
+    url: "https://www.paypal.me/osheenviews",
+    color: "#003087",
+  },
+  {
+    label: "WhatsApp",
+    icon: "📱",
+    url: "https://wa.me/27637820245",
+    color: "#25d366",
+  },
 ];
 
 function SkillBar({ name, level, color, inView }) {
   return (
     <div className="mb-4">
       <div className="flex justify-between items-center mb-1.5">
-        <span style={{ fontFamily: "'Montserrat',sans-serif", color: "#d1d5db", fontSize: "0.8rem", letterSpacing: "0.05em" }}>
+        <span
+          style={{
+            fontFamily: "'Montserrat',sans-serif",
+            color: "#d1d5db",
+            fontSize: "0.8rem",
+            letterSpacing: "0.05em",
+          }}
+        >
           {name}
         </span>
-        <span style={{ fontFamily: "'Bebas Neue',sans-serif", color, fontSize: "0.95rem" }}>{level}%</span>
+        <span
+          style={{
+            fontFamily: "'Bebas Neue',sans-serif",
+            color,
+            fontSize: "0.95rem",
+          }}
+        >
+          {level}%
+        </span>
       </div>
-      <div className="h-2 rounded-full overflow-hidden" style={{ background: "rgba(255,255,255,0.06)" }}>
+      <div
+        className="h-2 overflow-hidden rounded-full"
+        style={{ background: "rgba(255,255,255,0.06)" }}
+      >
         <motion.div
           className="h-full rounded-full"
-          style={{ background: `linear-gradient(90deg, ${color}80, ${color})`, boxShadow: `0 0 8px ${color}60` }}
+          style={{
+            background: `linear-gradient(90deg, ${color}80, ${color})`,
+            boxShadow: `0 0 8px ${color}60`,
+          }}
           initial={{ width: 0 }}
           animate={inView ? { width: `${level}%` } : { width: 0 }}
-          transition={{ type: "spring", stiffness: 60, damping: 18, delay: 0.1 }}
+          transition={{
+            type: "spring",
+            stiffness: 60,
+            damping: 18,
+            delay: 0.1,
+          }}
         />
       </div>
     </div>
@@ -283,14 +336,21 @@ export default function CreatorPage() {
   const skillsRef = useRef(null);
   const skillsInView = useInView(skillsRef, { once: true, margin: "-60px" });
   const projectsRef = useRef(null);
-  const projectsInView = useInView(projectsRef, { once: true, margin: "-60px" });
+  const projectsInView = useInView(projectsRef, {
+    once: true,
+    margin: "-60px",
+  });
 
-  useEffect(() => { document.title = "Meet the Creator — 5s Arena Blog"; }, []);
+  useEffect(() => {
+    document.title = "Meet the Creator — 5s Arena Blog";
+  }, []);
 
   return (
     <>
       {/* Gate 1: Interactive icon gate */}
-      {!gateUnlocked && <PageGateLoader onUnlock={() => setGateUnlocked(true)} />}
+      {!gateUnlocked && (
+        <PageGateLoader onUnlock={() => setGateUnlocked(true)} />
+      )}
 
       {/* Gate 2: 5s welcome animation */}
       <AnimatePresence>
@@ -308,12 +368,12 @@ export default function CreatorPage() {
             transition={{ duration: 0.8 }}
             style={{ background: "var(--color-bg)", minHeight: "100vh" }}
           >
-
             {/* ══ HERO ════════════════════════════════════════════ */}
             <section
-              className="relative overflow-hidden py-24 px-4 text-center"
+              className="relative px-4 py-24 overflow-hidden text-center"
               style={{
-                background: "linear-gradient(135deg, #030712 0%, #0d1117 40%, #1a0a2e 100%)",
+                background:
+                  "linear-gradient(135deg, #030712 0%, #0d1117 40%, #1a0a2e 100%)",
                 borderBottom: "1px solid rgba(168,85,247,0.15)",
               }}
             >
@@ -330,17 +390,22 @@ export default function CreatorPage() {
                     top: `${20 + (i % 2) * 40}%`,
                   }}
                   animate={{ x: [0, 30, -20, 0], y: [0, -20, 10, 0] }}
-                  transition={{ duration: 6 + i, repeat: Infinity, ease: "easeInOut" }}
+                  transition={{
+                    duration: 6 + i,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }}
                 />
               ))}
 
               <div className="relative z-10">
                 {/* Avatar placeholder */}
                 <motion.div
-                  className="w-32 h-32 rounded-full mx-auto mb-6 flex items-center justify-center"
+                  className="flex items-center justify-center w-32 h-32 mx-auto mb-6 rounded-full"
                   style={{
                     background: "linear-gradient(135deg, #7c3aed, #22c55e)",
-                    boxShadow: "0 0 40px rgba(168,85,247,0.5), 0 0 80px rgba(34,197,94,0.3)",
+                    boxShadow:
+                      "0 0 40px rgba(168,85,247,0.5), 0 0 80px rgba(34,197,94,0.3)",
                     fontSize: "3.5rem",
                   }}
                   initial={{ scale: 0, rotate: -180 }}
@@ -369,7 +434,13 @@ export default function CreatorPage() {
 
                 {/* Role */}
                 <motion.p
-                  style={{ fontFamily: "'Montserrat',sans-serif", color: "#22c55e", letterSpacing: "0.2em", fontSize: "0.85rem", textTransform: "uppercase" }}
+                  style={{
+                    fontFamily: "'Montserrat',sans-serif",
+                    color: "#22c55e",
+                    letterSpacing: "0.2em",
+                    fontSize: "0.85rem",
+                    textTransform: "uppercase",
+                  }}
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.4 }}
@@ -380,19 +451,25 @@ export default function CreatorPage() {
                 {/* Bio */}
                 <motion.p
                   className="max-w-xl mx-auto mt-6"
-                  style={{ fontFamily: "'Inter',sans-serif", color: "#9ca3af", lineHeight: 1.8, fontSize: "0.95rem" }}
+                  style={{
+                    fontFamily: "'Inter',sans-serif",
+                    color: "#9ca3af",
+                    lineHeight: 1.8,
+                    fontSize: "0.95rem",
+                  }}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.5 }}
                 >
-                  Cape Town-based creator behind the 5s Arena Blog and Bookit platform.
-                  Passionate about building immersive digital experiences that blend sports
-                  culture with cutting-edge web design.
+                  Cape Town-based creator behind the 5s Arena Blog and Bookit
+                  platform. Passionate about building immersive digital
+                  experiences that blend sports culture with cutting-edge web
+                  design.
                 </motion.p>
 
                 {/* Social links */}
                 <motion.div
-                  className="flex justify-center gap-4 mt-8 flex-wrap"
+                  className="flex flex-wrap justify-center gap-4 mt-8"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.6 }}
@@ -411,7 +488,11 @@ export default function CreatorPage() {
                         color,
                         textDecoration: "none",
                       }}
-                      whileHover={{ background: `${color}25`, y: -2, boxShadow: `0 8px 24px ${color}30` }}
+                      whileHover={{
+                        background: `${color}25`,
+                        y: -2,
+                        boxShadow: `0 8px 24px ${color}30`,
+                      }}
                       whileTap={{ scale: 0.97 }}
                     >
                       <span>{icon}</span> {label}
@@ -422,11 +503,21 @@ export default function CreatorPage() {
             </section>
 
             {/* ══ SKILLS ══════════════════════════════════════════ */}
-            <section ref={skillsRef} className="py-16 px-4" style={{ background: "#0d1117" }}>
+            <section
+              ref={skillsRef}
+              className="px-4 py-16"
+              style={{ background: "#0d1117" }}
+            >
               <div className="max-w-3xl mx-auto">
                 <motion.h2
                   className="mb-10"
-                  style={{ fontFamily: "'Oswald',sans-serif", fontSize: "1.5rem", color: "#f9fafb", textTransform: "uppercase", letterSpacing: "0.1em" }}
+                  style={{
+                    fontFamily: "'Oswald',sans-serif",
+                    fontSize: "1.5rem",
+                    color: "#f9fafb",
+                    textTransform: "uppercase",
+                    letterSpacing: "0.1em",
+                  }}
                   initial={{ opacity: 0, x: -20 }}
                   animate={skillsInView ? { opacity: 1, x: 0 } : {}}
                   transition={{ type: "spring", stiffness: 200 }}
@@ -435,30 +526,44 @@ export default function CreatorPage() {
                 </motion.h2>
                 <div className="grid md:grid-cols-2 gap-x-12">
                   {SKILLS.map((skill) => (
-                    <SkillBar key={skill.name} {...skill} inView={skillsInView} />
+                    <SkillBar
+                      key={skill.name}
+                      {...skill}
+                      inView={skillsInView}
+                    />
                   ))}
                 </div>
               </div>
             </section>
 
             {/* ══ PROJECTS ════════════════════════════════════════ */}
-            <section ref={projectsRef} className="py-16 px-4" style={{ background: "var(--color-bg)" }}>
+            <section
+              ref={projectsRef}
+              className="px-4 py-16"
+              style={{ background: "var(--color-bg)" }}
+            >
               <div className="max-w-4xl mx-auto">
                 <motion.h2
                   className="mb-10"
-                  style={{ fontFamily: "'Oswald',sans-serif", fontSize: "1.5rem", color: "#f9fafb", textTransform: "uppercase", letterSpacing: "0.1em" }}
+                  style={{
+                    fontFamily: "'Oswald',sans-serif",
+                    fontSize: "1.5rem",
+                    color: "#f9fafb",
+                    textTransform: "uppercase",
+                    letterSpacing: "0.1em",
+                  }}
                   initial={{ opacity: 0, x: -20 }}
                   animate={projectsInView ? { opacity: 1, x: 0 } : {}}
                   transition={{ type: "spring", stiffness: 200 }}
                 >
                   <span style={{ color: "#22c55e" }}>/// </span>FEATURED BUILDS
                 </motion.h2>
-                <div className="grid md:grid-cols-3 gap-5">
+                <div className="grid gap-5 md:grid-cols-3">
                   {PROJECTS.map(({ name, desc, icon, color, link }, i) => (
                     <motion.a
                       key={name}
                       href={link}
-                      className="block rounded-2xl p-6 cursor-pointer no-underline"
+                      className="block p-6 no-underline cursor-pointer rounded-2xl"
                       style={{
                         background: "rgba(17,24,39,0.8)",
                         border: `1px solid ${color}25`,
@@ -467,14 +572,43 @@ export default function CreatorPage() {
                       }}
                       initial={{ opacity: 0, y: 30 }}
                       animate={projectsInView ? { opacity: 1, y: 0 } : {}}
-                      transition={{ type: "spring", stiffness: 200, damping: 22, delay: i * 0.1 }}
-                      whileHover={{ y: -4, boxShadow: `0 16px 40px ${color}20`, borderColor: `${color}60` }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 200,
+                        damping: 22,
+                        delay: i * 0.1,
+                      }}
+                      whileHover={{
+                        y: -4,
+                        boxShadow: `0 16px 40px ${color}20`,
+                        borderColor: `${color}60`,
+                      }}
                     >
-                      <div style={{ fontSize: "2.5rem", marginBottom: "0.75rem" }}>{icon}</div>
-                      <h3 style={{ fontFamily: "'Oswald',sans-serif", color, fontSize: "1rem", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: "0.5rem" }}>
+                      <div
+                        style={{ fontSize: "2.5rem", marginBottom: "0.75rem" }}
+                      >
+                        {icon}
+                      </div>
+                      <h3
+                        style={{
+                          fontFamily: "'Oswald',sans-serif",
+                          color,
+                          fontSize: "1rem",
+                          textTransform: "uppercase",
+                          letterSpacing: "0.05em",
+                          marginBottom: "0.5rem",
+                        }}
+                      >
                         {name}
                       </h3>
-                      <p style={{ fontFamily: "'Inter',sans-serif", color: "#9ca3af", fontSize: "0.8rem", lineHeight: 1.6 }}>
+                      <p
+                        style={{
+                          fontFamily: "'Inter',sans-serif",
+                          color: "#9ca3af",
+                          fontSize: "0.8rem",
+                          lineHeight: 1.6,
+                        }}
+                      >
                         {desc}
                       </p>
                     </motion.a>
@@ -485,12 +619,18 @@ export default function CreatorPage() {
 
             {/* ══ SUPPORT THE CREATOR CTA ══════════════════════════ */}
             <section
-              className="py-20 px-4 text-center relative overflow-hidden"
-              style={{ background: "linear-gradient(135deg, #1a0a2e 0%, #0d1117 60%, #030712 100%)" }}
+              className="relative px-4 py-20 overflow-hidden text-center"
+              style={{
+                background:
+                  "linear-gradient(135deg, #1a0a2e 0%, #0d1117 60%, #030712 100%)",
+              }}
             >
               <motion.div
                 className="absolute inset-0 pointer-events-none"
-                style={{ background: "radial-gradient(ellipse at 50% 50%, rgba(168,85,247,0.12) 0%, transparent 70%)" }}
+                style={{
+                  background:
+                    "radial-gradient(ellipse at 50% 50%, rgba(168,85,247,0.12) 0%, transparent 70%)",
+                }}
                 animate={{ scale: [1, 1.1, 1], opacity: [0.5, 1, 0.5] }}
                 transition={{ duration: 4, repeat: Infinity }}
               />
@@ -514,23 +654,34 @@ export default function CreatorPage() {
                   ENJOYED THE WORK?{" "}
                   <span style={{ color: "#a855f7" }}>BUY ME A COFFEE</span>
                 </h2>
-                <p style={{ fontFamily: "'Inter',sans-serif", color: "#9ca3af", marginBottom: "2rem", lineHeight: 1.7 }}>
-                  Every donation keeps the code flowing and the football stories alive.
-                  I build all of this solo — your support means everything.
+                <p
+                  style={{
+                    fontFamily: "'Inter',sans-serif",
+                    color: "#9ca3af",
+                    marginBottom: "2rem",
+                    lineHeight: 1.7,
+                  }}
+                >
+                  Every donation keeps the code flowing and the football stories
+                  alive. I build all of this solo — your support means
+                  everything.
                 </p>
-                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <div className="flex flex-col justify-center gap-4 sm:flex-row">
                   <motion.a
                     href="https://ko-fi.com/robynawesome"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="px-8 py-4 rounded-2xl font-bold text-white text-sm no-underline"
+                    className="px-8 py-4 text-sm font-bold text-white no-underline rounded-2xl"
                     style={{
                       fontFamily: "'Montserrat',sans-serif",
                       letterSpacing: "0.05em",
                       background: "linear-gradient(135deg,#7c3aed,#a855f7)",
                       boxShadow: "0 0 30px rgba(168,85,247,0.5)",
                     }}
-                    whileHover={{ y: -3, boxShadow: "0 0 50px rgba(168,85,247,0.7)" }}
+                    whileHover={{
+                      y: -3,
+                      boxShadow: "0 0 50px rgba(168,85,247,0.7)",
+                    }}
                     whileTap={{ scale: 0.97 }}
                   >
                     ☕ Support on Ko-fi
@@ -539,7 +690,7 @@ export default function CreatorPage() {
                     href="https://www.paypal.me/osheenviews"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="px-8 py-4 rounded-2xl font-bold text-sm no-underline"
+                    className="px-8 py-4 text-sm font-bold no-underline rounded-2xl"
                     style={{
                       fontFamily: "'Montserrat',sans-serif",
                       letterSpacing: "0.05em",
@@ -557,8 +708,14 @@ export default function CreatorPage() {
             </section>
 
             {/* ══ Fun facts footer ════════════════════════════════ */}
-            <section className="py-10 px-4 text-center" style={{ background: "#030712", borderTop: "1px solid rgba(255,255,255,0.04)" }}>
-              <div className="flex flex-wrap justify-center gap-8 max-w-3xl mx-auto">
+            <section
+              className="px-4 py-10 text-center"
+              style={{
+                background: "#030712",
+                borderTop: "1px solid rgba(255,255,255,0.04)",
+              }}
+            >
+              <div className="flex flex-wrap justify-center max-w-3xl gap-8 mx-auto">
                 {[
                   ["☕", "Fuelled by coffee"],
                   ["⚽", "Football every weekend"],
@@ -566,15 +723,29 @@ export default function CreatorPage() {
                   ["🇿🇦", "Cape Town, SA"],
                   ["💚", "Loves green"],
                 ].map(([icon, text]) => (
-                  <motion.div key={text} className="text-center" whileHover={{ scale: 1.1 }}>
-                    <div style={{ fontSize: "1.5rem", marginBottom: "0.25rem" }}>{icon}</div>
-                    <p style={{ fontFamily: "'Inter',sans-serif", color: "#6b7280", fontSize: "0.75rem" }}>{text}</p>
+                  <motion.div
+                    key={text}
+                    className="text-center"
+                    whileHover={{ scale: 1.1 }}
+                  >
+                    <div
+                      style={{ fontSize: "1.5rem", marginBottom: "0.25rem" }}
+                    >
+                      {icon}
+                    </div>
+                    <p
+                      style={{
+                        fontFamily: "'Inter',sans-serif",
+                        color: "#6b7280",
+                        fontSize: "0.75rem",
+                      }}
+                    >
+                      {text}
+                    </p>
                   </motion.div>
                 ))}
               </div>
             </section>
-
-            <BottomNavBar />
           </motion.div>
         )}
       </AnimatePresence>
