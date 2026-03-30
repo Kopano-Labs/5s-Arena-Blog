@@ -83,7 +83,7 @@ router.get("/me", async (req, res) => {
     if (!authHeader || !authHeader.startsWith("Bearer ")) {
       return res
         .status(401)
-        .json({ error: "Authentication failed: No token provided" }); // Missing check for no token/malformed header
+        .json({ error: "Authentication failed: No token provided" });
     }
 
     // Extract token

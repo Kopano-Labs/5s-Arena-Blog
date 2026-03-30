@@ -34,6 +34,7 @@ export function AuthProvider({ children }) {
       const fetchProfile = async () => {
         try {
           const response = await fetch(`${API_URL}/auth/profile`, {
+            // Changed from /auth/me to /auth/profile
             headers: getAuthHeaders(),
           });
           if (response.ok) {
