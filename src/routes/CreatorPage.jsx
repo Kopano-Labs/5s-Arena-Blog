@@ -7,9 +7,9 @@ import PageGateLoader from "@/components/PageGateLoader";
 
 /* Floating particle */
 function Particle({ delay, color }) {
-  const x = (Math.random() - 0.5) * 800;
-  const y = (Math.random() - 0.5) * 600;
-  const size = Math.random() * 6 + 2;
+  const [x] = useState(() => (Math.random() - 0.5) * 800);
+  const [y] = useState(() => (Math.random() - 0.5) * 600);
+  const [size] = useState(() => Math.random() * 6 + 2);
   return (
     <motion.div
       className="absolute rounded-full pointer-events-none"
@@ -521,7 +521,7 @@ export default function CreatorPage() {
                   animate={skillsInView ? { opacity: 1, x: 0 } : {}}
                   transition={{ type: "spring", stiffness: 200 }}
                 >
-                  <span style={{ color: "#a855f7" }}>/// </span>SKILLS & TOOLS
+                  <span style={{ color: "#a855f7" }}>{"/// "}</span>SKILLS & TOOLS
                 </motion.h2>
                 <div className="grid md:grid-cols-2 gap-x-12">
                   {SKILLS.map((skill) => (
@@ -555,7 +555,7 @@ export default function CreatorPage() {
                   animate={projectsInView ? { opacity: 1, x: 0 } : {}}
                   transition={{ type: "spring", stiffness: 200 }}
                 >
-                  <span style={{ color: "#22c55e" }}>/// </span>FEATURED BUILDS
+                  <span style={{ color: "#22c55e" }}>{"/// "}</span>FEATURED BUILDS
                 </motion.h2>
                 <div className="grid gap-5 md:grid-cols-3">
                   {PROJECTS.map(({ name, desc, icon, color, link }, i) => (
