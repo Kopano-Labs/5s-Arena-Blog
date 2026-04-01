@@ -9,17 +9,17 @@ const router = Router();
 // GET /authors - list all authors and admins
 router.get("/authors", async (req, res) => {
   try {
-    const authors = await User.find({ role: { $in: ["author", "admin"] } })
-      .select("username avatar bio role");
-    
-    // Map backend to frontend expectations
-    const mapped = authors.map(a => ({
+    const authors = await User.find({
+      role: { $in: ["author", "admin"] },
+    }).select("username avatar bio role");
+
+    const mapped = authors.map((a) => ({
       name: a.username,
       image: a.avatar,
       bio: a.bio,
-      role: a.role
+      role: a.role,
     }));
-    
+
     res.json(mapped);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -55,8 +55,8 @@ router.post("/register", async (req, res) => {
       },
     });
   } catch (err) {
-    console.error("Registration error:", err); // More detailed logging
-    res.status(500).json({ error: "Server error during registration." }); // Generic message to client
+    console.error("Registration error:", err);
+    res.status(500).json({ error: "Server error during registration." });
   }
 });
 
@@ -92,8 +92,8 @@ router.post("/login", async (req, res) => {
       },
     });
   } catch (err) {
-    console.error("Login error:", err); // More detailed logging
-    res.status(500).json({ error: "Server error during login." }); // Generic message to client
+    console.error("Login error:", err);
+    res.status(500).json({ error: "Server error during login." });
   }
 });
 
@@ -129,17 +129,16 @@ router.put("/me", protect, async (req, res) => {
 // POST /google - Login or Register with Google
 router.post("/google", async (req, res) => {
   try {
-    const { credential } = req.body; // This is the Google ID Token
+    const { credential } = req.body;
 
     if (!credential) {
       return res.status(400).json({ error: "Google credential not provided" });
     }
 
-    // Verify the Google ID token
     const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
     const ticket = await client.verifyIdToken({
       idToken: credential,
-      audience: process.env.GOOGLE_CLIENT_ID, // Ensure this matches the client ID used by your frontend
+      audience: process.env.GOOGLE_CLIENT_ID,
     });
     const payload = ticket.getPayload();
     const { email, name, picture } = payload;
@@ -147,15 +146,12 @@ router.post("/google", async (req, res) => {
     let user = await User.findOne({ email });
 
     if (!user) {
-      // If user doesn't exist, register them
-      // Note: Google login doesn't provide a password, so we'll set a placeholder or generate one
-      // For a real app, consider a more robust password handling (e.g., allow user to set after first Google login)
       user = await User.create({
-        username: name.toLowerCase().replace(/\s+/g, "") || email.split("@")[0], // Generate username from name or email
+        username: name.toLowerCase().replace(/\s+/g, "") || email.split("@")[0],
         email,
-        password: Math.random().toString(36).slice(-8), // Placeholder password
+        password: Math.random().toString(36).slice(-8),
         avatar: picture,
-        role: "reader", // Default role for new Google users
+        role: "reader",
       });
     }
 
