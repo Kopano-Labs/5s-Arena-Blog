@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence, useInView } from "framer-motion";
 import PageGateLoader from "@/components/PageGateLoader";
-import BottomNavBar from "@/components/BottomNavBar";
 /* ════════════════════════════════════════════════════════════════
    5-SECOND WELCOME ANIMATION — plays before content reveals
    ════════════════════════════════════════════════════════════════ */
